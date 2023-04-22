@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.0/dist/cdn.min.js"></script>
+    <!-- css -->
+    <link rel="stylesheet" href="index.css"/>
+    <title>音频工具箱</title>
+</head>
+
+<body>
+    <script src="detect.js"></script>
+    <script>
+        // Data组件
+        function Data() {
+            return {
+                mp3FileName: "",
+                message: "↑ 快点！",
+                bpm: 0,
+                ncm2mp3() {
+                    fetch("http://localhost:8080/ncm2mp3").then(async response => {
+                        const result = await response.json()
+                        if(result.code === 500){
+                            this.message = result.err
+                        }
+                        else{
+                            this.message = result.msg
+                        }
+                        setTimeout(() => {
+                            this.message = "↑ 快点！"
+                        }, 2000)
+                    }).catch(err => {
+                        this.message = "前端请求错误！！"
+                    })
+                },
+                calcBPM() {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext
+                    const context = new AudioContext()
+                    // Fetch some audio file
+                    fetch(`./mp3/${this.mp3FileName}`).then(async (response) => {
+                        // Get response as ArrayBuffer
+                        const buffer = await response.arrayBuffer()
+
+                        // Decode audio into an AudioBuffer
+                        const data = await new Promise(function (resolve, reject) {
+                            context.decodeAudioData(buffer, resolve, reject)
+                        });
+
+                        // Run detection
+                        this.bpm = detect(data) * 1
+                    }).catch(console.error)
+                }
+            }
+        }
+    </script>
+
+
+    <div class="container" x-data="Data">
+       <h1>ncm转mp3</h1>
+       <h2>将ncm文件放入ncm文件夹，然后点击以下按钮即可批量转mp3</h2>
+       <p align="center">
+         <button @click="ncm2mp3">批量转mp3</button>
+       </p>
+       <h3 x-text="message"></h3>
+       <hr>
+       <h1>计算BPM</h1>
+       <h2>输入文件夹里面已有的mp3文件名 (xxx.mp3), 计算BPM</h2>
+       <p align="center">
+            <input type="text" x-model="mp3FileName"/>
+            <button @click="calcBPM">计算BPM</button>
+            <h3 x-text="['BPM: ' + bpm]"></h3>
+       </p>
+    </div>
+
+
+</body>
+
+</html>

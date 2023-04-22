@@ -1,0 +1,14 @@
+.container h1, .container h2, .container h3{
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.container button{
+    width: 100px;
+    height: 35px;
+}
+
+.container input{
+    width: 200px;
+    height: 30px;
+}
