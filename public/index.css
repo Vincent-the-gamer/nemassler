@@ -1,3 +1,32 @@
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 40px;
+    width: 100%;
+}
+
+header a{
+    text-decoration: none;
+    position: relative;
+    padding: 5px;
+    top: -8px;
+    width: fit-content;
+    font-size: 20px;
+    color: rgb(132, 0, 255);
+    font-weight: bold;
+    border-radius: 6px;
+}
+
+header a:hover{
+    background-color: aquamarine;
+}
+
+.container{
+    position: relative;
+    margin-top: 70px;
+}
+
 .container h1, .container h2, .container h3{
     width: fit-content;
     margin: 0 auto;
