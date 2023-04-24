@@ -40,4 +40,6 @@ put your `.ncm` files in `/ncm` file, then click the button:
 mp3 files and song cover will be generated in `public/mp3` file.
 
 #### Calculate BPM
-Now we need to input `mp3 file name` to calculate. This is so stupid and it will be a `<select>` instead later.
+choose your generated `.mp3` audios, or import your own `.mp3` audios to calculate BPM.
+
+![BPM](./.github/calculateBPM.png)

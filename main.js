@@ -3,11 +3,11 @@
  */
 const express = require("express")
 const ncm2mp3 = require("./ncm2mp3")
+const readFiles = require("./readFiles")
 
 const app = express()
 
 app.use( express.static("./public") )
-
 
 app.get("/ncm2mp3", (req, res) => {
     try{
@@ -23,7 +23,13 @@ app.get("/ncm2mp3", (req, res) => {
         code: 200,
         msg: "转换成功！！！"
     })
+})
 
+app.get("/readFiles",async (req, res) => {
+    const files = await readFiles.readFiles()
+    res.send({
+        files
+    })
 })
 
 app.listen(8080, () => {

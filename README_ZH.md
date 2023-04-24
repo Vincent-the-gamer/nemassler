@@ -39,6 +39,6 @@ yarn start
 然后mp3和曲封面会输出到`public/mp3`文件夹下，自取就好
 
 #### 计算BPM
-目前没有做优化，请手动输入`mp3文件夹里面的文件名`，之后会优化成下拉选择。
+选择生成的mp3，或者自己手动导入mp3到`public/mp3`文件夹都行，这样就可以在页面下拉框找到你的歌曲，然后计算bpm。
 
-注意，必须将mp3放入`public/mp3`文件夹下，然后输入文件名进行bpm计算。
+![BPM](./.github/calculateBPM.png)
