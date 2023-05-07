@@ -63,7 +63,7 @@
                         // Run detection
                         this.bpm = detect(data) * 1
                     }).catch(console.error)
-                }
+                },
             }
         }
     </script>
@@ -85,15 +85,27 @@
        <h1>计算BPM</h1>
        <h2>输入文件夹里面已有的mp3文件名 (xxx.mp3), 计算BPM</h2>
        <p align="center">
-            <select x-model="mp3FileName">
-                <template x-for="item of files">
-                    <option x-text="item" :value="item"></option>
-                </template>
-            </select>
+            <template x-if="files.length > 0">
+                <select x-model="mp3FileName">
+                    <template x-for="item of files">
+                        <option x-text="item" :value="item"></option>
+                    </template>
+                </select>
+            </template>
+           
+            <template x-else>
+                <select>
+                    <option disabled>没有待检测bpm的mp3文件</option>
+                </select>
+            </template>
             <button @click="calcBPM">计算BPM</button>
             <h3 x-text="['BPM: ' + bpm]"></h3>
        </p>
     </div>
+
+    <footer>
+        <h3>@2023 Vincent-the-gamer</h3>
+    </footer>
 
 
 </body>

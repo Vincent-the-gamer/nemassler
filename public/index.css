@@ -4,18 +4,21 @@ header{
     left: 0;
     height: 40px;
     width: 100%;
+    border-bottom: 2px solid black;
+    box-shadow: 0 0 15px black;
 }
 
 header a{
     text-decoration: none;
     position: relative;
-    padding: 5px;
-    top: -8px;
+    padding: 4px;
+    top: -10px;
     width: fit-content;
     font-size: 20px;
     color: rgb(132, 0, 255);
     font-weight: bold;
     border-radius: 6px;
+    border: 2px solid aquamarine;
 }
 
 header a:hover{
@@ -40,4 +43,20 @@ header a:hover{
 .container input{
     width: 200px;
     height: 30px;
+}
+
+footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: fit-content;
+    width: 100%;
+    box-shadow: 0 0 15px gray;
+}
+
+footer h3{
+    position: relative;
+    margin: 0 auto;
+    height: fit-content;
+    width: fit-content;
 }
