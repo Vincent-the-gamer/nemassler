@@ -1,5 +1,7 @@
 # Audio Tools
 
+Powered By [Alpine.js](https://alpinejs.dev/)
+
 中文文档: [README_ZH.md](./README_ZH.md)
 
 This tool pack is a workflow that transfer netease music `.ncm` format audio to `.mp3`, and then you can calculate `beats per minute(BPM)` of these songs.
@@ -28,18 +30,18 @@ yarn start
 
 ### Get Started
 
+#### Page Overview
+
+![page](./.github/page.png)
+
+You can choose either `English` or `Simplified Chinese` now.
+
 #### ncm -> mp3
 Run your code, then access: `http://localhost:8080`
 
-put your `.ncm` files in `/ncm` file, then click the button:
+put your `.ncm` files in `ncm` directory, then click the `Convert All` button
 
-**English page will be added later...**
+mp3 files and song cover will be generated in `public/mp3` directory.
 
-![MP3](./.github/toMP3.png)
-
-mp3 files and song cover will be generated in `public/mp3` file.
-
-#### Calculate BPM
-choose your generated `.mp3` audios, or import your own `.mp3` audios to calculate BPM.
-
-![BPM](./.github/calculateBPM.png)
+#### Calculate BPM（beats per minute）
+choose your generated `.mp3` audios, or import your own `.mp3` audios into `public/mp3` directory to calculate BPM.
