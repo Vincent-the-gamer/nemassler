@@ -33,5 +33,5 @@ app.get("/readFiles",async (req, res) => {
 })
 
 app.listen(8080, () => {
-    console.log("服务已启动：http://localhost:8080")
+    console.log("Server started at: http://localhost:8080")
 })
