@@ -6,24 +6,24 @@ const fs = require('fs');
 const aes = require('aes-js');
 const path = require("path");
 
-module.exports.ncm2mp3 = async () => {
+module.exports.ncm2mp3CustomDirectory = async (ncmDir, mp3OutDir, songCoverOutDir) => {
     // macOS删除.DS_Store
     await Promise.resolve(
-        fs.stat(path.resolve(__dirname, "./ncm/.DS_Store"), (err, stats) => {
+        fs.stat(path.resolve(__dirname, `${ncmDir}/.DS_Store`), (err, stats) => {
             if (err) {
                 console.log(err)
             }
             else if (stats.isFile()) {
-                fs.unlink(path.resolve(__dirname, "./ncm/.DS_Store"), (err) => {
+                fs.unlink(path.resolve(__dirname, `${ncmDir}/.DS_Store`), (err) => {
                     console.log(err)
                 })
             }
         })
     )
     console.time('1');
-    fs.readdir(path.resolve(__dirname, "./ncm"), function (err, files) {
+    fs.readdir(path.resolve(__dirname, ncmDir), function (err, files) {
         files.forEach(v => {
-            const file = fs.readFileSync(path.resolve(__dirname, "./ncm/") + "/" + v);
+            const file = fs.readFileSync(path.resolve(__dirname, ncmDir) + "/" + v);
             let globalOffset = 10;
 
             const keyLength = file.readUInt32LE(10);
@@ -79,7 +79,7 @@ module.exports.ncm2mp3 = async () => {
             file.copy(imageBuffer, 0, globalOffset, globalOffset + imageLength);
             globalOffset += imageLength;
             // write image to file
-            fs.writeFileSync(path.resolve(__dirname, "./public/songcover") + "/" + v.replace(/.ncm/, '') + '.jpg', imageBuffer);
+            fs.writeFileSync(path.resolve(__dirname, songCoverOutDir) + "/" + v.replace(/.ncm/, '') + '.jpg', imageBuffer);
 
             function buildKeyBox(key) {
                 const keyLength = key.length;
@@ -124,7 +124,7 @@ module.exports.ncm2mp3 = async () => {
 
                 fmusic.push(buffer);
             }
-            fs.writeFileSync(path.resolve(__dirname, "./public/mp3") + "/" + v.replace(/.ncm/, '.mp3'), Buffer.concat(fmusic));
+            fs.writeFileSync(path.resolve(__dirname, mp3OutDir) + "/" + v.replace(/.ncm/, '.mp3'), Buffer.concat(fmusic));
         })
     })
 }

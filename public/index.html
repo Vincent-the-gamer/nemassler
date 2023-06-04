@@ -27,11 +27,14 @@
             return {
                 mp3FileName: "",
                 message: "↑ Click",
+                ncmDir: "C:\\Users\\KiryuKazuma\\Desktop\\ncm",
+                mp3OutDir: "C:\\Users\\KiryuKazuma\\Desktop\\mp3", 
+                songCoverOutDir: "C:\\Users\\KiryuKazuma\\Desktop\\songcover",
                 bpm: 0,
                 files: [],
                 // 生命周期钩子: 挂载
                 init(){
-                    fetch("http://localhost:8080/readFiles").then(async response => {
+                    fetch("http://localhost:8080/readFiles?mp3Dir=" + this.mp3OutDir).then(async response => {
                         const result = await response.json()
                         this.files = result.files
                         this.mp3FileName = this.files[0]
@@ -39,8 +42,18 @@
                         alert("MP3 Request Error!!")
                     })
                 },
-                ncm2mp3() {
-                    fetch("http://localhost:8080/ncm2mp3").then(async response => {
+                customNcm2mp3(){
+                    fetch("http://localhost:8080/customNcm2mp3",{
+                        method: 'post',
+                        body: JSON.stringify({
+                            ncmDir: this.ncmDir,
+                            mp3OutDir: this.mp3OutDir,
+                            songCoverOutDir: this.songCoverOutDir
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then(async response => {
                         const result = await response.json()
                         if(result.code === 500){
                             this.message = result.err
@@ -59,13 +72,31 @@
                     const AudioContext = window.AudioContext || window.webkitAudioContext
                     const context = new AudioContext()
                     // Fetch some audio file
-                    fetch(`http://localhost:8080/mp3/${this.mp3FileName}`).then(async (response) => {
+                    fetch("http://localhost:8080/readSingleFile",{
+                        method: 'post',
+                        body: JSON.stringify({
+                            mp3Dir: this.mp3OutDir,
+                            mp3FileName: this.mp3FileName
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then(async (response) => {
                         // Get response as ArrayBuffer
-                        const buffer = await response.arrayBuffer()
+                        const result = await response.json()
+                        const buffer = result.buffer.data
+                        
+                        let length = buffer.length;
+                        let modebuf = new ArrayBuffer(length)
+                        let modeview = new Uint8Array(modebuf)
+                        for (let i = 0; i < length; ++i) {
+                            modeview[i] = buffer[i]
+                        }
+                        const hex = Array.prototype.map.call(new Uint8Array(modebuf),x=>('00'+x.toString(16)).slice(-2)).join('');
 
                         // Decode audio into an AudioBuffer
                         const data = await new Promise(function (resolve, reject) {
-                            context.decodeAudioData(buffer, resolve, reject)
+                            context.decodeAudioData(hex, resolve, reject)
                         });
 
                         // Run detection
@@ -105,11 +136,39 @@
         </template>
        <p align="center">
          <template x-if="$store.languageStore.currentLang === 'zh'">
-            <button @click="ncm2mp3">批量转mp3</button>
+             <p>
+                ncm输入路径:
+              <input type="text" x-model="ncmDir"/>
+             </p>
+             <br/>
+         </template>
+         <template x-if="$store.languageStore.currentLang === 'zh'">
+             <p>
+                mp3输出路径:
+                <input type="text" x-model="mp3OutDir"/>
+             </p>
+             <br/>
+         </template>
+         <template x-if="$store.languageStore.currentLang === 'zh'">
+            <button @click="customNcm2mp3">批量转mp3</button>
          </template>
          <template x-if="$store.languageStore.currentLang === 'en'">
-            <button @click="ncm2mp3">Convert All</button>
-         </template>
+            <p>
+               ncm input directory:
+             <input type="text" x-model="ncmDir"/>
+            </p>
+            <br/>
+        </template>
+        <template x-if="$store.languageStore.currentLang === 'en'">
+            <p>
+               mp3 output directory:
+               <input type="text" x-model="mp3OutDir"/>
+            </p>
+            <br/>
+        </template>
+        <template x-if="$store.languageStore.currentLang === 'en'">
+            <button @click="customNcm2mp3">Convert All</button>
+        </template>
 
        </p>
        <h3 x-text="message"></h3>
@@ -151,7 +210,7 @@
                 <button @click="calcBPM">计算BPM</button>
             </template>
             <template x-if="$store.languageStore.currentLang === 'en'">
-                <button @click="calcBPM">Calculate BPM</button>
+                <button @click="calcBPM" id="eng-bpm">Calculate BPM</button>
             </template>
             <h3 x-text="['BPM: ' + bpm]"></h3>
        </p>

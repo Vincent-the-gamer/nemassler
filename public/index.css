@@ -15,6 +15,7 @@ header{
     left: 0;
     height: 40px;
     width: 100%;
+    background-color: black;
     border-bottom: 2px solid black;
     box-shadow: 0 0 15px black;
 }
@@ -30,6 +31,7 @@ header a{
     font-weight: bold;
     border-radius: 6px;
     border: 2px solid aquamarine;
+    transition: background-color, 0.4s;
 }
 
 header a:hover{
@@ -67,21 +69,33 @@ header > p > span {
     margin: 0 auto;
 }
 
+.container p{
+    margin: 10px auto;
+    width: fit-content;
+}
+
 .container button{
     width: 100px;
     height: 35px;
 }
 
 .container input{
-    width: 200px;
+    width: 400px;
     height: 30px;
 }
+
 
 .container .select-bpm{
     height: 35px;
 }
 
+.container #eng-bpm{
+    position: relative;
+    top: -7px;
+}
+
 footer{
+    background-color: black;
     position: fixed;
     bottom: 0;
     left: 0;
