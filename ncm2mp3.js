@@ -79,7 +79,7 @@ module.exports.ncm2mp3 = async () => {
             file.copy(imageBuffer, 0, globalOffset, globalOffset + imageLength);
             globalOffset += imageLength;
             // write image to file
-            fs.writeFileSync(path.resolve(__dirname, "./public/mp3") + "/" + v.replace(/.ncm/, '') + '.jpg', imageBuffer);
+            fs.writeFileSync(path.resolve(__dirname, "./public/songcover") + "/" + v.replace(/.ncm/, '') + '.jpg', imageBuffer);
 
             function buildKeyBox(key) {
                 const keyLength = key.length;

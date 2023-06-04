@@ -101,7 +101,7 @@
             <h2>将.ncm后缀文件放入ncm文件夹，然后点击以下按钮即可批量转mp3</h2>
         </template>
         <template x-if="$store.languageStore.currentLang === 'en'">
-            <h2>Put .ncm files into ncm directory, then click the button</h2>
+            <h2>Put .ncm files into ncm folder, then click the button</h2>
         </template>
        <p align="center">
          <template x-if="$store.languageStore.currentLang === 'zh'">
@@ -125,7 +125,7 @@
          <h2>选择文件夹里面已有的mp3文件 (xxx.mp3), 计算BPM</h2>
        </template>
        <template x-if="$store.languageStore.currentLang === 'en'">
-         <h2>Choose existing mp3 file (xxx.mp3) in public/mp3 directory to calculate BPM</h2>
+         <h2>Choose existing mp3 file (xxx.mp3) in public/mp3 folder to calculate BPM</h2>
        </template>
        
        <p align="center">
@@ -143,7 +143,7 @@
                         <option value="">没有待检测bpm的mp3文件</option>
                     </template>
                     <template x-if="$store.languageStore.currentLang === 'en'">
-                        <option value="">No mp3 file in public/mp3 directory.</option>
+                        <option value="">No mp3 file in public/mp3 folder.</option>
                     </template>
                 </select>
             </template>
