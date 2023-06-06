@@ -32,7 +32,7 @@ yarn start
 
 #### 页面总览
 
-![页面](./.github/page.png)
+![页面](./.github/page-cn.png)
 
 现在，你可以在右上角切换语言了，有`简体中文`和`英语`。
 
