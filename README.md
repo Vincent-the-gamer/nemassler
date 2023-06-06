@@ -39,9 +39,20 @@ You can choose either `English` or `Simplified Chinese` now.
 #### ncm -> mp3
 Run your code, then access: `http://localhost:8080`
 
-put your `.ncm` files in `ncm` directory, then click the `Convert All` button
+put your `.ncm` files in `your custom ncm input folder`, then click the `Convert All` button
 
-mp3 files and song cover will be generated in `public/mp3` directory.
+mp3 files and song cover will be generated in `your custom mp3 output folder`.
+
+#### Default Folders
+* Windows: 
+    * ncm: C:\\Users\\public\\ncm
+    * mp3: C:\\Users\\public\\mp3
+    * songcover: C:\\Users\\public\\songcover
+* macOS
+    * ncm: /Users/Shared/ncm
+    * mp3: /Users/Shared/mp3
+    * songcover: /Users/Shared/songcover
+
 
 #### Calculate BPM（beats per minute）
-choose your generated `.mp3` audios, or import your own `.mp3` audios into `public/mp3` directory to calculate BPM.
+choose your generated `.mp3` audios, or import your own `.mp3` audios into `your custom mp3 output folder` to calculate BPM.

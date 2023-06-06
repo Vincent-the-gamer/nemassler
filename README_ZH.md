@@ -39,9 +39,19 @@ yarn start
 #### ncm -> mp3
 启动代码后，访问`http://localhost:8080`页面
 
-把需要转换的ncm全部放入项目的`ncm`文件夹，然后点击页面:
+把需要转换的ncm全部放入`你的自定义ncm输入文件夹`，然后点击页面:
 
-然后mp3和曲封面会输出到`public/mp3`文件夹下，自取就好
+然后mp3和曲封面会输出到`你的自定义mp3输出文件夹`下，自取就好
+
+#### 默认文件夹路径
+* Windows: 
+    * ncm: C:\\Users\\public\\ncm
+    * mp3: C:\\Users\\public\\mp3
+    * songcover: C:\\Users\\public\\songcover
+* macOS
+    * ncm: /Users/Shared/ncm
+    * mp3: /Users/Shared/mp3
+    * songcover: /Users/Shared/songcover
 
 #### 计算BPM（每分钟的节拍数）
-选择生成的mp3，或者自己手动导入mp3到`public/mp3`文件夹都行，这样就可以在页面下拉框找到你的歌曲，然后计算bpm。
+选择生成的mp3，或者自己手动导入mp3到`你的自定义mp3输出文件夹`都行，这样就可以在页面下拉框找到你的歌曲，然后计算bpm。
