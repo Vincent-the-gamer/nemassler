@@ -1,14 +1,20 @@
 const fs = require('fs');
 const path = require('path');
 const NodeID3 = require("node-id3")
- 
-module.exports.readFiles = async (mp3Dir) => {
+const ensureDirectoryExists = require("./ensureDirectoryExists")
+
+module.exports.readFiles = async (mp3Dir, ncmDir, songCoverOutDir) => {
+    // ensure directories exist
+    await ensureDirectoryExists.ensureDirectoryExists(mp3Dir)
+    await ensureDirectoryExists.ensureDirectoryExists(ncmDir)
+    await ensureDirectoryExists.ensureDirectoryExists(songCoverOutDir)
+
     return new Promise((resolve, reject) => {
         fs.readdir(path.resolve(__dirname, mp3Dir), (err, files) => { 
             if (err) 
                 reject(err); 
             else { 
-                // 排除.DS_Store
+                // exclude .DS_Store
                resolve(files.filter(item => item !== ".DS_Store"))
             } 
         }) 

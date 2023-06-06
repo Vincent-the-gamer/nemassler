@@ -6,21 +6,26 @@ const fs = require('fs');
 const aes = require('aes-js');
 const path = require("path");
 
+
 module.exports.ncm2mp3CustomDirectory = async (ncmDir, mp3OutDir, songCoverOutDir) => {
-    // macOS删除.DS_Store
-    await Promise.resolve(
-        fs.stat(path.resolve(__dirname, `${ncmDir}/.DS_Store`), (err, stats) => {
-            if (err) {
-                console.log(err)
-            }
-            else if (stats.isFile()) {
-                fs.unlink(path.resolve(__dirname, `${ncmDir}/.DS_Store`), (err) => {
+    // delete .DS_Store in macOS
+    if (fs.existsSync( path.resolve(__dirname, `${ncmDir}/.DS_Store`) )) {
+        await Promise.resolve(
+            fs.stat(path.resolve(__dirname, `${ncmDir}/.DS_Store`), (err, stats) => {
+                if (err) {
                     console.log(err)
-                })
-            }
-        })
-    )
+                }
+                else if (stats.isFile()) {
+                    fs.unlink(path.resolve(__dirname, `${ncmDir}/.DS_Store`), (err) => {
+                        console.log(err)
+                    })
+                }
+            })
+        )
+    }
+    
     console.time('1');
+
     fs.readdir(path.resolve(__dirname, ncmDir), function (err, files) {
         files.forEach(v => {
             const file = fs.readFileSync(path.resolve(__dirname, ncmDir) + "/" + v);

@@ -28,13 +28,17 @@ app.post("/customNcm2mp3", (req, res) => {
     }
     res.send({
         code: 200,
-        msg: "转换成功！！！"
+        msg: "转换成功！一秒后页面将刷新！"
     })
 })
 
 // 扫描mp3文件夹
 app.get("/readFiles",async (req, res) => {
-    const files = await readFiles.readFiles(req.query.mp3Dir)
+    const files = await readFiles.readFiles(
+        req.query.mp3Dir,
+        req.query.ncmDir,
+        req.query.songCoverDir
+    )
     res.send({
         files
     })
@@ -42,7 +46,10 @@ app.get("/readFiles",async (req, res) => {
 
 // 读取单个文件
 app.post("/readSingleFile",async (req, res) => {
-    const buffer = await readFiles.readSingleFile(req.body.mp3Dir, req.body.mp3FileName)
+    const buffer = await readFiles.readSingleFile(
+        req.body.mp3Dir, 
+        req.body.mp3FileName
+    )
     res.send({
         buffer
     })
