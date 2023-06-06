@@ -44,16 +44,6 @@ app.get("/readFiles",async (req, res) => {
     })
 })
 
-// 读取单个文件
-app.post("/readSingleFile",async (req, res) => {
-    const buffer = await readFiles.readSingleFile(
-        req.body.mp3Dir, 
-        req.body.mp3FileName
-    )
-    res.send({
-        buffer
-    })
-})
 
 app.listen(8080, () => {
     console.log("Server started at: http://localhost:8080")

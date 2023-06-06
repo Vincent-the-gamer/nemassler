@@ -1,5 +1,5 @@
 /**
- * 网易云ncm后缀音乐转mp3
+ * netease music .ncm audio to mp3
  */
 
 const fs = require('fs');
