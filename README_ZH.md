@@ -1,5 +1,7 @@
 # 音频处理工具
 
+Node.js版本：18.14.0
+
 本项目前端使用[Alpine.js](https://alpinejs.dev/)开发
 
 English Version: [README.md](./README.md)

@@ -9,7 +9,7 @@ module.exports.readFiles = async (mp3Dir, ncmDir, songCoverOutDir) => {
     await fileUtils.ensureDirectoryExists(songCoverOutDir)
 
     // create symbolic link of mp3 folder
-    await fileUtils.createSymbolicLink(mp3Dir, "public/mp3")
+    await fileUtils.createSymbolicLink(mp3Dir, path.resolve(__dirname, "public/mp3"))
 
     return new Promise((resolve, reject) => {
         fs.readdir(path.resolve(__dirname, mp3Dir), (err, files) => { 

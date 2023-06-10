@@ -14,7 +14,22 @@ module.exports.ensureDirectoryExists = async (directory) => {
 module.exports.createSymbolicLink = async (source, target) => {
     return new Promise((resolve, reject) => {
         if(!fs.existsSync(source)) reject("source doesn\'t exist!")
-        else if(fs.existsSync(target)) resolve("target exists!")
+        else if(fs.existsSync(target)) 
+        {
+            // remove symlink
+            fs.unlinkSync(target, err => {
+                console.log(err)
+            })
+            // recreate symlink
+            fs.symlink(source,
+                target, 'file', (err) => {
+                if (err)
+                    reject(err);
+                else {
+                    console.log(`Symlink exists and it is replaced`);
+                }
+            })
+        }
         else {
             fs.symlink(source,
                 target, 'file', (err) => {
