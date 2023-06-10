@@ -39,6 +39,37 @@
             }
         }
 
+        // init directorys
+        function getNcmDir(platform){
+            if(localStorage.getItem("ncmDir")) return localStorage.getItem("ncmDir")
+            else{
+                if(platform === "windows"){
+                    return `C:\\Users\\public\\ncm`
+                }
+                else return `/Users/Shared/ncm` 
+            }
+        }
+
+        function getMp3OutDir(platform){
+            if(localStorage.getItem("mp3OutDir")) return localStorage.getItem("mp3OutDir")
+            else{
+                if(platform === "windows"){
+                    return `C:\\Users\\public\\mp3`
+                }
+                else return `/Users/Shared/mp3` 
+            } 
+        }
+
+        function getSongCoverOutDir(platform){
+            if(localStorage.getItem("songCoverOutDir")) return localStorage.getItem("songCoverOutDir")
+            else{
+                if(platform === "windows"){
+                    return `C:\\Users\\public\\songcover`
+                }
+                else return `/Users/Shared/songcover` 
+            }
+        }
+
     </script>
     <script>
         // Data component
@@ -47,14 +78,15 @@
                 platform: useCurrentPlatform(),
                 mp3FileName: "",
                 message: "↑ Click",
-                ncmDir: this.platform === "windows" ? `C:\\Users\\public\\ncm` : `/Users/Shared/ncm`,
-                mp3OutDir: this.platform === "windows" ? `C:\\Users\\public\\mp3` : `/Users/Shared/mp3`,
-                songCoverOutDir: this.platform === "windows" ? `C:\\Users\\public\\songcover` : `/Users/Shared/songcover`,
+                ncmDir: getNcmDir(this.platform),
+                mp3OutDir: getMp3OutDir(this.platform),
+                songCoverOutDir: getSongCoverOutDir(this.platform),
                 bpm: 0,
                 files: [],
                 // Lifecycle: init
                 // initial folders
                 init() {
+                    
                     fetch(
                         `http://localhost:8080/readFiles?mp3Dir=${this.mp3OutDir}&ncmDir=${this.ncmDir}&songCoverDir=${this.songCoverOutDir}`
                     ).then(async response => {
@@ -85,6 +117,9 @@
                             this.message = result.err
                         }
                         else {
+                            localStorage.setItem("ncmDir",this.ncmDir)
+                            localStorage.setItem("mp3OutDir", this.mp3OutDir)
+                            localStorage.setItem("songCoverOutDir", this.songCoverOutDir)
                             this.message = result.msg
                             setTimeout(() => {
                                 window.location.reload();

@@ -15,7 +15,6 @@ app.use( express.static("./public") )
 // ncm to mp3
 app.post("/customNcm2mp3", async (req, res) => {
     try{
-        localStorage.setItem("")
         Promise.all([
             fileUtils.ensureDirectoryExists(req.body.ncmDir),
             fileUtils.ensureDirectoryExists(req.body.mp3OutDir),
