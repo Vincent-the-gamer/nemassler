@@ -113,7 +113,7 @@
                         // Run detection
                         this.bpm = detect(data) * 1
                     }).catch(console.error)
-                }
+                },
             }
         }
 
@@ -149,7 +149,7 @@
             <template x-if="$store.languageStore.currentLang === 'zh'">
                 <p>
                     ncm输入路径:
-                    <input type="text" x-model="ncmDir" />
+                    <input type="text" x-model="ncmDir"/>
                 </p>
                 <br />
             </template>
@@ -187,7 +187,7 @@
             <template x-if="$store.languageStore.currentLang === 'en'">
                 <p>
                     songcover output directory:
-                    <input type="text" x-model="songCoverOutDir" />
+                    <input type="text" x-model="songCoverOutDir"/>
                 </p>
                 <br />
             </template>

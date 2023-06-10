@@ -1,9 +1,10 @@
 /**
- * 主服务
+ * Main Service
  */
 const express = require("express")
 const ncm2mp3 = require("./ncm2mp3")
 const readFiles = require("./readFiles")
+const fileUtils = require("./fileUtils")
 
 const app = express()
 
@@ -11,14 +12,21 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use( express.static("./public") )
 
-// ncm转mp3
-app.post("/customNcm2mp3", (req, res) => {
+// ncm to mp3
+app.post("/customNcm2mp3", async (req, res) => {
     try{
-        ncm2mp3.ncm2mp3CustomDirectory(
-            req.body.ncmDir,
-            req.body.mp3OutDir,
-            req.body.songCoverOutDir
-        )
+        localStorage.setItem("")
+        Promise.all([
+            fileUtils.ensureDirectoryExists(req.body.ncmDir),
+            fileUtils.ensureDirectoryExists(req.body.mp3OutDir),
+            fileUtils.ensureDirectoryExists(req.body.songCoverOutDir)
+        ]).then(([r1,r2,r3]) => {
+            ncm2mp3.ncm2mp3CustomDirectory(
+                req.body.ncmDir,
+                req.body.mp3OutDir,
+                req.body.songCoverOutDir
+            )
+        })
     }
     catch(err){
         res.send({
@@ -28,11 +36,11 @@ app.post("/customNcm2mp3", (req, res) => {
     }
     res.send({
         code: 200,
-        msg: "转换成功！一秒后页面将刷新！"
+        msg: "Transform success! Wait 1s for page refreshment...."
     })
 })
 
-// 扫描mp3文件夹
+// scan mp3 folder
 app.get("/readFiles",async (req, res) => {
     const files = await readFiles.readFiles(
         req.query.mp3Dir,
@@ -43,6 +51,7 @@ app.get("/readFiles",async (req, res) => {
         files
     })
 })
+
 
 
 app.listen(8080, () => {

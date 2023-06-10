@@ -17,7 +17,9 @@ module.exports.readFiles = async (mp3Dir, ncmDir, songCoverOutDir) => {
                 reject(err); 
             else { 
                 // exclude .DS_Store
-               resolve(files.filter(item => item !== ".DS_Store"))
+                fs.existsSync(path.resolve(__dirname, mp3Dir) + "/.DS_Store") ?
+                resolve(files.filter(item => item !== ".DS_Store")) :
+                resolve(files)
             } 
         }) 
     })
