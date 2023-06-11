@@ -9,13 +9,13 @@
     <script defer src="alpine-v3.12.0.js"></script>
     <!-- css -->
     <link rel="stylesheet" href="index.css" />
-    <title>音频工具箱</title>
+    <title>音频工具箱 Audio Tools by Vincent</title>
 </head>
 
 <body>
     <script src="detect.js"></script>
-    <!-- store -->
     <script>
+        // store
         document.addEventListener('alpine:init', () => {
             Alpine.store('languageStore', {
                 currentLang: "zh",
@@ -40,31 +40,34 @@
         }
 
         // init directorys
-        function getNcmDir(platform){
+        function getNcmDir(){
+            const platform = useCurrentPlatform()
             if(localStorage.getItem("ncmDir")) return localStorage.getItem("ncmDir")
             else{
-                if(platform === "windows"){
-                    return `C:\\Users\\public\\ncm`
+                if(platform === "win32" || platform === "win64"){
+                    return `C:\\Users\\Public\\ncm`
                 }
                 else return `/Users/Shared/ncm` 
             }
         }
 
-        function getMp3OutDir(platform){
+        function getMp3OutDir(){
+            const platform = useCurrentPlatform()
             if(localStorage.getItem("mp3OutDir")) return localStorage.getItem("mp3OutDir")
             else{
-                if(platform === "windows"){
-                    return `C:\\Users\\public\\mp3`
+                if(platform === "win32" || platform === "win64"){
+                    return `C:\\Users\\Public\\mp3`
                 }
                 else return `/Users/Shared/mp3` 
             } 
         }
 
-        function getSongCoverOutDir(platform){
+        function getSongCoverOutDir(){
+            const platform = useCurrentPlatform()
             if(localStorage.getItem("songCoverOutDir")) return localStorage.getItem("songCoverOutDir")
             else{
-                if(platform === "windows"){
-                    return `C:\\Users\\public\\songcover`
+                if(platform === "win32" || platform === "win64"){
+                    return `C:\\Users\\Public\\songcover`
                 }
                 else return `/Users/Shared/songcover` 
             }
@@ -75,33 +78,36 @@
         // Data component
         function Data() {
             return {
-                platform: useCurrentPlatform(),
                 mp3FileName: "",
-                message: "↑ Click",
-                ncmDir: getNcmDir(this.platform),
-                mp3OutDir: getMp3OutDir(this.platform),
-                songCoverOutDir: getSongCoverOutDir(this.platform),
+                message: () => Alpine.store('languageStore').currentLang === 'zh' ? "↑ 点击" : "↑ Click",
+                ncmDir: getNcmDir(),
+                mp3OutDir: getMp3OutDir(),
+                songCoverOutDir: getSongCoverOutDir(),
                 bpm: 0,
                 files: [],
                 // Lifecycle: init
-                // initial folders
+                // initial MP3 files
                 init() {
-                    
+                   this.loadMp3Files()
+                },
+                loadMp3Files(){
                     fetch(
-                        `http://localhost:8080/readFiles?mp3Dir=${this.mp3OutDir}&ncmDir=${this.ncmDir}&songCoverDir=${this.songCoverOutDir}`
+                        `http://127.0.0.1:8080/readFiles?mp3Dir=${this.mp3OutDir}&ncmDir=${this.ncmDir}&songCoverDir=${this.songCoverOutDir}`
                     ).then(async response => {
                         const result = await response.json()
                         this.files = result.files
                         this.mp3FileName = this.files[0]
                     }).catch(err => {
-                        this.message = "ncm2mp3 Request Error!"
+                        this.message = Alpine.store('languageStore').currentLang === 'zh' ?
+                        "ncm2mp3方法请求错误" : 
+                        "ncm2mp3 Request Error!"
                         setTimeout(() => {
-                            this.message = "↑ Click"
+                            this.message = Alpine.store('languageStore').currentLang === 'zh' ? "↑ 点击" : "↑ Click"
                         }, 2000)
                     })
                 },
                 customNcm2mp3() {
-                    fetch("http://localhost:8080/customNcm2mp3", {
+                    fetch("http://127.0.0.1:8080/customNcm2mp3", {
                         method: 'post',
                         body: JSON.stringify({
                             ncmDir: this.ncmDir,
@@ -120,15 +126,19 @@
                             localStorage.setItem("ncmDir",this.ncmDir)
                             localStorage.setItem("mp3OutDir", this.mp3OutDir)
                             localStorage.setItem("songCoverOutDir", this.songCoverOutDir)
-                            this.message = result.msg
+                            this.message = Alpine.store('languageStore').currentLang === 'zh' ?
+                                            result.msgZh : 
+                                            result.msgEn
                             setTimeout(() => {
                                 window.location.reload();
                             }, 1000)
                         }
                         setTimeout(() => {
-                            this.message = "↑ Click"
+                            this.message = Alpine.store('languageStore').currentLang === 'zh' ? "↑ 点击" : "↑ Click"
                         }, 2000)
                     }).catch(err => {
+                        Alpine.store('languageStore').currentLang === 'zh' ?
+                        alert("ncm2mp3方法请求错误") : 
                         alert("ncm2mp3 Request Error!")
                     })
                 },
@@ -136,7 +146,7 @@
                     const AudioContext = window.AudioContext || window.webkitAudioContext
                     const context = new AudioContext()
                     // Fetch audio file
-                    fetch(`http://localhost:8080/mp3/${this.mp3FileName}`).then(async (response) => {
+                    fetch(`http://127.0.0.1:8080/getMp3File?filePath=${this.mp3OutDir}/${this.mp3FileName}`).then(async (response) => {
                         // Get response as ArrayBuffer
                         const buffer = await response.arrayBuffer()
 
@@ -148,7 +158,7 @@
                         // Run detection
                         this.bpm = detect(data) * 1
                     }).catch(console.error)
-                },
+                }
             }
         }
 
@@ -269,8 +279,15 @@
             <template x-if="$store.languageStore.currentLang === 'zh'">
                 <button @click="calcBPM">计算BPM</button>
             </template>
+            <template x-if="$store.languageStore.currentLang === 'zh'">
+                <button @click="loadMp3Files">刷新</button>
+            </template>
+
             <template x-if="$store.languageStore.currentLang === 'en'">
                 <button @click="calcBPM" id="eng-bpm">Calculate BPM</button>
+            </template>
+            <template x-if="$store.languageStore.currentLang === 'en'">
+                <button @click="loadMp3Files">Refresh</button>
             </template>
         <h3 x-text="['BPM: ' + bpm]"></h3>
         </p>
