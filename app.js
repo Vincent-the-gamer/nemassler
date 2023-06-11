@@ -1,6 +1,7 @@
 /**
  * Main Service
  */
+const path = require("path")
 const express = require("express")
 const ncm2mp3 = require("./ncm2mp3")
 const readFiles = require("./readFiles")
@@ -8,9 +9,11 @@ const fileUtils = require("./fileUtils")
 
 const app = express()
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
-app.use( express.static("./public") )
+app.use( express.json() )
+app.use( express.urlencoded({ extended: false }) )
+app.use( express.static(
+    path.resolve(__dirname, "./public")
+))
 
 // ncm to mp3
 app.post("/customNcm2mp3", async (req, res) => {

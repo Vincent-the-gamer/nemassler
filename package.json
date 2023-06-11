@@ -1,21 +1,32 @@
 {
-  "name": "audio-tools",
+  "name": "nemassler",
+  "author": "诡锋 Vincent",
   "version": "1.0.0",
-  "description": "音频操作工具",
+  "description": "Transform .ncm audio format into .mp3 format, and get beats per minute(BPM) of MP3s",
   "main": "main.js",
+  "config": {
+    "forge": "./forge.config.js"
+  },
   "scripts": {
     "serve": "nodemon app.js",
-    "start": "node app.js",
-    "client": "electron ."
+    "page": "node app.js",
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
-  "author": "诡锋",
   "license": "ISC",
   "dependencies": {
     "aes-js": "^3.1.2",
-    "express": "^4.18.2",
-    "nodemon": "^2.0.22"
+    "electron-squirrel-startup": "^1.0.0",
+    "express": "^4.18.2"
   },
   "devDependencies": {
-    "electron": "^25.1.0"
+    "@electron-forge/cli": "^6.1.1",
+    "@electron-forge/maker-deb": "^6.1.1",
+    "@electron-forge/maker-rpm": "^6.1.1",
+    "@electron-forge/maker-squirrel": "^6.1.1",
+    "@electron-forge/maker-zip": "^6.1.1",
+    "electron": "^25.1.0",
+    "nodemon": "^2.0.22"
   }
 }

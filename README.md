@@ -1,10 +1,12 @@
-# Audio Tools
+# Nemassler
 
 Powered By [Alpine.js](https://alpinejs.dev/)
 
 中文文档: [README_ZH.md](./README_ZH.md)
 
-This tool pack is a workflow that transfer netease music `.ncm` format audio to `.mp3`, and then you can calculate `beats per minute(BPM)` of these songs.
+This tool pack has 2 modules now:
+1. Transfer netease music `.ncm` format audio to `.mp3`
+2. Calculate `beats per minute(BPM)` of these songs.
 
 ## Usage
 This repo needs `Node.js`, please install it first.
