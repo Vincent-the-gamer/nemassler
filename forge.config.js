@@ -2,7 +2,7 @@ module.exports = {
     packagerConfig: {
         name: 'Nemassler',
         executableName: 'Nemassler',
-        icon: "./buildicon",
+        icon: "./buildIcon",
         extraResource: ["./public"]
     },
     makers: [

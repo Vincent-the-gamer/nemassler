@@ -3,8 +3,6 @@
 </p>
 <h1 align="center">Nemassler</h1>
 
-Waiting for update...
-
 Powered By [Alpine.js](https://alpinejs.dev/)
 
 中文文档: [README_ZH.md](./README_ZH.md)
@@ -14,22 +12,11 @@ This tool pack has 2 modules now:
 2. Calculate `beats per minute(BPM)` of these songs.
 
 ## Usage
-This repo needs `Node.js`, please install it first.
 
-Download Node.js: [https://nodejs.org/en](https://nodejs.org/en)
+### Download
+Download application from Release: 
 
-
-### Git Clone
-~~~shell
-git clone https://github.com/Vincent-the-gamer/audio-tools.git
-~~~
-
-### Install Dependency
-~~~shell
-npm install
-~~~
-
-
+[https://github.com/Vincent-the-gamer/Nemassler/releases](https://github.com/Vincent-the-gamer/Nemassler/releases)
 
 ### Get Started
 
@@ -56,6 +43,14 @@ mp3 files and song cover will be generated in `your custom mp3 output folder`.
     * mp3: /Users/Shared/mp3
     * songcover: /Users/Shared/songcover
 
-
 #### Calculate BPM（beats per minute）
 choose your generated `.mp3` audios, or import your own `.mp3` audios into `your custom mp3 output folder` to calculate BPM.
+
+## Build from source code
+~~~shell
+git clone https://github.com/Vincent-the-gamer/Nemassler.git
+
+npm install
+
+npm run package
+~~~

@@ -20,11 +20,12 @@ header{
     box-shadow: 0 0 15px black;
 }
 
-header a{
-    text-decoration: none;
-    position: relative;
+header .github{
+    display: inline;
+    position: absolute;
     padding: 4px;
-    top: -10px;
+    top: 3px;
+    right: 0;
     width: fit-content;
     font-size: 20px;
     color: rgb(255, 255, 255);
@@ -34,22 +35,37 @@ header a{
     transition: background-color, 0.4s;
 }
 
-header a:hover{
+header .github:hover{
     background-color: aquamarine;
+    cursor: pointer;
+}
+
+header .logo{
+    position: absolute;
+    top: 0;
+    left: 5px;
+    height: 100%;
 }
 
 header h1{
     position: absolute;
     top: 0;
-    left: 5px;
+    left: 55px;
     margin-top: -3px;
     width: fit-content;
+}
+
+header .right span{
+    position: relative;
+    top: -12px;
+    right: 100px;
 }
 
 header select{
     position: relative;
     top: -12px;
     height: 35px;
+    right: 100px;
     width: 100px;
     border-radius: 5px;
 }

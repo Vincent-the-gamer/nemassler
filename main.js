@@ -2,7 +2,7 @@ if (require('electron-squirrel-startup')) return
 
 require('./app.js')
 
-const { app, BrowserWindow, shell, Menu } = require('electron')
+const { app, BrowserWindow, Menu } = require('electron')
 const path = require("path")
 
 function start() {
@@ -24,10 +24,6 @@ function start() {
         enableRemoteModule: true, 
     },
   });
-  mainWindow.webContents.on('new-window', function(e, url) {
-    e.preventDefault();
-    shell.openExternal(url);
-  })
 
   mainWindow.on('close', () => {
     mainWindow = null
@@ -36,20 +32,17 @@ function start() {
 };
 
 
-// make <a href> open your browser instead of a new electron window
-
-
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') {
     app.quit()
   }
 })
 
-app.on('activate', function () {
+app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
-    createWindow()
+    start()
   }
 })
 

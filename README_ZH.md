@@ -3,9 +3,7 @@
 </p>
 <h1 align="center">Nemassler</h1>
 
-文档即将更新...
-
-Node.js版本：18.14.0
+Node.js版本：18.16.0
 
 本项目前端使用[Alpine.js](https://alpinejs.dev/)开发
 
@@ -16,21 +14,11 @@ English Version: [README.md](./README.md)
 2. 计算`.mp3`格式音频的`每分钟节拍数(BPM)`。
 
 ## 使用
-该项目依赖`Node.js`,请先安装
 
-Node.js中文网: [http://nodejs.p2hp.com/](http://nodejs.p2hp.com/)
+### 下载
+下载构建好的程序: 
 
-
-### 拉取项目
-~~~shell
-git clone https://github.com/Vincent-the-gamer/audio-tools.git
-~~~
-
-### 安装依赖
-~~~shell
-npm install
-~~~
-
+[https://github.com/Vincent-the-gamer/Nemassler/releases](https://github.com/Vincent-the-gamer/Nemassler/releases)
 
 ### 开始使用
 
@@ -41,11 +29,10 @@ npm install
 现在，你可以在右上角切换语言了，有`简体中文`和`英语`。
 
 #### ncm -> mp3
-启动代码后，访问`http://localhost:8080`页面
 
-把需要转换的ncm全部放入`你的自定义ncm输入文件夹`，然后点击页面:
+把需要转换的ncm全部放入`你的ncm输入路径`，然后点击页面:
 
-然后mp3和曲封面会输出到`你的自定义mp3输出文件夹`下，自取就好
+然后mp3和曲封面会输出到`你的mp3输出路径`下，自取就好
 
 #### 默认文件夹路径
 * Windows: 
@@ -58,4 +45,4 @@ npm install
     * songcover: /Users/Shared/songcover
 
 #### 计算BPM（每分钟的节拍数）
-选择生成的mp3，或者自己手动导入mp3到`你的自定义mp3输出文件夹`都行，这样就可以在页面下拉框找到你的歌曲，然后计算bpm。
+选择生成的mp3，或者自己手动导入mp3到`你的mp3输出路径`都行，这样就可以在页面下拉框找到你的歌曲，然后计算bpm。
