@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./.github/icon.png"/>
+  <img src="./.github/TitleLogo.png" width="200" height="200"/>
 </p>
 <h1 align="center">Nemassler</h1>
 
