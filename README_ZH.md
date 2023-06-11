@@ -1,4 +1,9 @@
-# 音频处理工具
+<p align="center">
+  <img src="./.github/icon.png"/>
+</p>
+<h1 align="center">Nemassler</h1>
+
+文档即将更新...
 
 Node.js版本：18.14.0
 
@@ -6,7 +11,9 @@ Node.js版本：18.14.0
 
 English Version: [README.md](./README.md)
 
-本工具是流水线式处理音频，直接将wyy音乐的ncm格式一键转换为mp3，然后计算音频的BPM（每分钟的节拍数）
+这个工具主要有俩功能:
+1. 把某yy音源的`.ncm` 格式音频转换为`.mp3`格式。
+2. 计算`.mp3`格式音频的`每分钟节拍数(BPM)`。
 
 ## 使用
 该项目依赖`Node.js`,请先安装
@@ -21,12 +28,7 @@ git clone https://github.com/Vincent-the-gamer/audio-tools.git
 
 ### 安装依赖
 ~~~shell
-yarn install
-~~~
-
-### 运行代码
-~~~shell
-yarn start
+npm install
 ~~~
 
 

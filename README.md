@@ -1,4 +1,9 @@
-# Nemassler
+<p align="center">
+  <img src="./.github/icon.png"/>
+</p>
+<h1 align="center">Nemassler</h1>
+
+Waiting for update...
 
 Powered By [Alpine.js](https://alpinejs.dev/)
 
@@ -21,13 +26,9 @@ git clone https://github.com/Vincent-the-gamer/audio-tools.git
 
 ### Install Dependency
 ~~~shell
-yarn install
+npm install
 ~~~
 
-### Run Code
-~~~shell
-yarn start
-~~~
 
 
 ### Get Started
