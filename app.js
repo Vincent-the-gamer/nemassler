@@ -12,8 +12,20 @@ const app = express()
 app.use( express.json() )
 app.use( express.urlencoded({ extended: false }) )
 app.use( express.static(
-    path.resolve(__dirname, "./public")
+    path.resolve(__dirname, "./frontend/dist")
 ))
+
+/**
+ * Cross Origin
+ */
+app.all("*", (req, res, next) => {
+    res.header("Access-Control-Allow-Origin","*");
+    res.header("Access-Control-Allow-Headers", "Content-Type,XFILENAME,XFILECATEGORY,XFILESIZE");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By",' 3.2.1');
+    next();
+});
+
 
 // ncm to mp3
 app.post("/customNcm2mp3", async (req, res) => {

@@ -1,4 +1,5 @@
-const OfflineContext = (window.OfflineAudioContext || window.webkitOfflineAudioContext);
+// @ts-ignore
+const OfflineContext: any = (window.OfflineAudioContext || window.webkitOfflineAudioContext);
 
 /**
  * Detect BPM of a sound source
@@ -6,7 +7,7 @@ const OfflineContext = (window.OfflineAudioContext || window.webkitOfflineAudioC
  * @return {Number}             Detected BPM
  */
 
-function detect(buffer) {
+export default function detect(buffer) {
   const source = getLowPassSource(buffer);
 
   /**
