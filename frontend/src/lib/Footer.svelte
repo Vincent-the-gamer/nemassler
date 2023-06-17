@@ -1,5 +1,5 @@
 <footer>
-    <h3>v1.0.1 | @2023 Vincent-the-gamer | MIT Licensed</h3>
+    <h3>v1.0.1 | @2023-present Vincent-the-gamer | MIT Licensed</h3>
 </footer>
 
 <style lang="scss">

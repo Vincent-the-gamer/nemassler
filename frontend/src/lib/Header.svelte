@@ -6,10 +6,14 @@
     
     <span class="right">
         <div class="text">
-            <span id="zh">语言:</span>
-            <!-- <span id="en">Language:</span> -->
+            {#if $language === "zh"}
+                <span id="zh">语言:</span>
+                {:else}
+                <span id="en">Language:</span>
+            {/if}
         </div>
-        <select bind:value={ $language }>
+        <select bind:value={ $language }
+                on:change={ changeLocalStorageLanguage }>
             <option value="zh">简体中文</option>
             <option value="en">English</option>
         </select>
@@ -34,6 +38,10 @@
             else window.location.href = url
         }
 
+        function changeLocalStorageLanguage(){
+            localStorage.setItem("language", $language)
+        }
+
 </script>
 
 
@@ -44,6 +52,7 @@ header{
     left: 0;
     height: 40px;
     width: 100%;
+    z-index: 2;
     background-color: black;
     border-bottom: 2px solid black;
     box-shadow: 0 0 15px black;
@@ -121,6 +130,9 @@ header{
         right: 100px;
         width: 100px;
         border-radius: 5px;
+        background-color: rgb(99, 99, 99);
+        color: white;
+        border: 2px solid deeppink;
     }
 
     & > p > span {
