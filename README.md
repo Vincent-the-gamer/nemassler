@@ -5,6 +5,7 @@
 
 <p align="center">
   <span style="font-size: 20px;">Powered By</span>
+  <br/>
   <a href="https://www.svelte.cn/" target="_blank">
     <img src="./.github/svelte.png"/>
   </a>
