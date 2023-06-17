@@ -3,9 +3,12 @@
 </p>
 <h1 align="center">Nemassler</h1>
 
-Node.js版本：18.16.0
-
-本项目前端使用[Alpine.js](https://alpinejs.dev/)开发
+<p align="center">
+  <span style="font-size: 20px;">抛瓦来自</span>
+  <a href="https://www.svelte.cn/" target="_blank">
+    <img src="./.github/svelte.png"/>
+  </a>
+</p>
 
 English Version: [README.md](./README.md)
 
@@ -19,6 +22,13 @@ English Version: [README.md](./README.md)
 下载构建好的程序: 
 
 [https://github.com/Vincent-the-gamer/Nemassler/releases](https://github.com/Vincent-the-gamer/Nemassler/releases)
+
+macOS提示已损坏，你应该把它扔到废纸篓?
+* 打开终端
+* 输入 `xattr -d com.apple.quarantine `
+* 把软件图标拖进终端，自动填入路径
+* 按下回车
+* 重新打开软件即可
 
 ### 开始使用
 
@@ -46,3 +56,18 @@ English Version: [README.md](./README.md)
 
 #### 计算BPM（每分钟的节拍数）
 选择生成的mp3，或者自己手动导入mp3到`你的mp3输出路径`都行，这样就可以在页面下拉框找到你的歌曲，然后计算bpm。
+
+## 从源代码构建
+~~~shell
+git clone https://github.com/Vincent-the-gamer/Nemassler.git
+
+# 请先构建前端
+cd frontend
+npm install
+npm run build
+
+# 然后打包后端
+cd ../
+npm install
+npm run package
+~~~

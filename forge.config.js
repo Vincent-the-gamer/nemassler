@@ -3,7 +3,8 @@ module.exports = {
         name: 'Nemassler',
         executableName: 'Nemassler',
         icon: "./buildIcon",
-        extraResource: ["./public"]
+        extraResource: ["./frontend/dist"]
+        
     },
     makers: [
         {
@@ -16,7 +17,7 @@ module.exports = {
             name: "@electron-forge/maker-zip",
             platforms: [
                 "darwin"
-            ]
+            ],
         },
         {
             name: "@electron-forge/maker-deb",

@@ -64,7 +64,7 @@
         <h3>{ msgEn }</h3>
         <hr>
         <h1>Calculate BPM</h1>
-        <h2>Choose existing mp3 file (xxx.mp3) in public/mp3 folder to calculate BPM</h2>
+        <h2>Choose existing mp3 file (xxx.mp3) in your custom mp3 folder to calculate BPM</h2>
         <div class="center">
         {#if files.length > 0}
             <select class="select-bpm" bind:value={ mp3FileName }>

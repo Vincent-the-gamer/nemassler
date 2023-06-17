@@ -3,7 +3,12 @@
 </p>
 <h1 align="center">Nemassler</h1>
 
-Powered By [Alpine.js](https://alpinejs.dev/)
+<p align="center">
+  <span style="font-size: 20px;">Powered By</span>
+  <a href="https://www.svelte.cn/" target="_blank">
+    <img src="./.github/svelte.png"/>
+  </a>
+</p>
 
 中文文档: [README_ZH.md](./README_ZH.md)
 
@@ -17,6 +22,13 @@ This tool pack has 2 modules now:
 Download application from Release: 
 
 [https://github.com/Vincent-the-gamer/Nemassler/releases](https://github.com/Vincent-the-gamer/Nemassler/releases)
+
+Can't open in macOS?
+* Open Terminal
+* Input `xattr -d com.apple.quarantine `
+* Drag the application and drop in Terminal, the directory will be automatically written.
+* Press enter(aka return) button!!!
+* Re-open the application.
 
 ### Get Started
 
@@ -33,8 +45,8 @@ mp3 files and song cover will be generated in `your mp3 output folder`.
 
 #### Default Folders
 * Windows: 
-    * ncm: C:\\Users\\public\\ncm
-    * mp3: C:\\Users\\public\\mp3
+    * ncm: C:\\Users\\Public\\ncm
+    * mp3: C:\\Users\\Public\\mp3
     * songcover: C:\\Users\\public\\songcover
 * macOS
     * ncm: /Users/Shared/ncm
@@ -48,7 +60,13 @@ choose your generated `.mp3` audios, or import your own `.mp3` audios into `your
 ~~~shell
 git clone https://github.com/Vincent-the-gamer/Nemassler.git
 
+# first: build frontend
+cd frontend
 npm install
+npm run build
 
+# then: package backend
+cd ../
+npm install
 npm run package
 ~~~
