@@ -11,6 +11,10 @@
   </a>
 </p>
 
+<p align="center">
+  <img src="https://readme-typing-svg.herokuapp.com/?lines=Nemassler, NMSL&center=true&size=20"/> 
+</p>
+
 English Version: [README.md](./README.md)
 
 这个工具主要有俩功能:
@@ -21,6 +25,8 @@ English Version: [README.md](./README.md)
 
 ### 下载
 下载构建好的程序: 
+
+**最新版本: v1.0.2**
 
 [https://github.com/Vincent-the-gamer/Nemassler/releases](https://github.com/Vincent-the-gamer/Nemassler/releases)
 
@@ -62,13 +68,5 @@ macOS提示已损坏，你应该把它扔到废纸篓?
 ~~~shell
 git clone https://github.com/Vincent-the-gamer/Nemassler.git
 
-# 请先构建前端
-cd frontend
-npm install
-npm run build
-
-# 然后打包后端
-cd ../
-npm install
-npm run package
+npm run build-app
 ~~~

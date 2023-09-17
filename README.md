@@ -9,6 +9,11 @@
   <a href="https://www.svelte.cn/" target="_blank">
     <img src="./.github/svelte.png"/>
   </a>
+  <br/>
+</p>
+
+<p align="center">
+  <img src="https://readme-typing-svg.herokuapp.com/?lines=Nemassler, NMSL&center=true&size=20"/> 
 </p>
 
 中文文档: [README_ZH.md](./README_ZH.md)
@@ -21,6 +26,8 @@ This tool pack has 2 modules now:
 
 ### Download
 Download application from Release: 
+
+**Latest Version: v1.0.2**
 
 [https://github.com/Vincent-the-gamer/Nemassler/releases](https://github.com/Vincent-the-gamer/Nemassler/releases)
 
@@ -61,13 +68,5 @@ choose your generated `.mp3` audios, or import your own `.mp3` audios into `your
 ~~~shell
 git clone https://github.com/Vincent-the-gamer/Nemassler.git
 
-# first: build frontend
-cd frontend
-npm install
-npm run build
-
-# then: package backend
-cd ../
-npm install
-npm run package
+npm run build-app
 ~~~
