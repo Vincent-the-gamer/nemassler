@@ -9,16 +9,10 @@ module.exports = {
     },
     makers: [
         // Windows 
-        {
-            name: "@electron-forge/maker-squirrel",
-            platforms: ["win32"],
-            config: {
-                name: "Nemassler",
-                setupExe: "Nemassler.exe", // 安装程序的名称
-                iconUrl: "./buildIcon/icon.ico",  // 软件图标
-                setupIcon: "./buildIcon/icon.ico", // 安装程序图标
-                noMsi: true, // 禁用 MSI 安装程序（可选）
-            }
+        { 
+            // zip target没有配置项
+            name: "@electron-forge/maker-zip",
+            platforms: ["win32"]
         },
         // macOS
         {
