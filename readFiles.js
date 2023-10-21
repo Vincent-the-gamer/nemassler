@@ -13,8 +13,15 @@ module.exports.readFiles = async (mp3Dir, ncmDir, songCoverOutDir) => {
             if (err) 
                 reject(err); 
             else { 
-                // exclude .DS_Store
-                resolve(files.filter(item => item !== ".DS_Store"))
+                // only read specific files
+                resolve(files.filter(item => {
+                    return item.endsWith(".ncm") ||
+                           item.endsWith(".mp3") ||
+                           item.endsWith(".png") ||
+                           item.endsWith(".jpg") ||
+                           item.endsWith(".jpeg") 
+                }))
+
             } 
         }) 
     })
