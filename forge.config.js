@@ -33,11 +33,11 @@ module.exports = {
         {
             name: "@electron-forge/maker-rpm",
             platforms: ["linux"],
-        }
-        // {
-        //     name: "@electron-forge/maker-deb",
-        //     platforms: ["linux"],
-        // },
+        },
+        {
+            name: "@electron-forge/maker-deb",
+            platforms: ["linux"],
+        },
     ]
 
 }
