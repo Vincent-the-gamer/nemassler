@@ -8,14 +8,15 @@
     import axios from "@/utils/axios";
     import { onMount } from "svelte";
     import detect from "@/utils/detect";
+    import judgePath from "@/utils/judgePath";
 
     /**
      * state
      */
     let mp3FileName: string = "";
-    let ncmDir: string = getNcmDir();
-    let mp3OutDir: string = getMp3OutDir();
-    let songCoverOutDir: string = getSongCoverOutDir();
+    let ncmDir: string = getNcmDir() as string;
+    let mp3OutDir: string = getMp3OutDir() as string;
+    let songCoverOutDir: string = getSongCoverOutDir() as string;
     let msgZh: string = "↑ 点击";
     let msgEn: string = "↑ Click";
     let files: string[] = [];
@@ -27,7 +28,7 @@
     onMount(async () => {
         await loadMp3Files();
         localStorage.getItem("language")
-            ? language.set(localStorage.getItem("language"))
+            ? language.set(localStorage.getItem("language") as string)
             : localStorage.setItem("language", $language);
     });
 
@@ -54,6 +55,16 @@
     }
 
     function customNcm2mp3() {
+        // check input path
+        if(!judgePath(ncmDir) || !judgePath(mp3OutDir) || !judgePath(songCoverOutDir)) {
+            msgZh = "路径格式错误！";
+            msgEn = "Path format error!";
+            setTimeout(() => {
+                msgZh = "↑ 点击";
+                msgEn = "↑ Click";
+            }, 2000);
+            return
+        }
         axios({
             url: "/customNcm2mp3",
             method: "post",
@@ -65,40 +76,39 @@
             headers: {
                 "Content-Type": "application/json",
             },
+        }).then(({ data }) => {
+            const result = data;
+            if (result.code === 500) {
+                // @ts-ignore
+                this.message = result.err;
+            } else {
+                localStorage.setItem("ncmDir", ncmDir);
+                localStorage.setItem("mp3OutDir", mp3OutDir);
+                localStorage.setItem("songCoverOutDir", songCoverOutDir);
+                msgEn = result.msgEn;
+                msgZh = result.msgZh;
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            }
+            setTimeout(() => {
+                msgZh = "↑ 点击";
+                msgEn = "↑ Click";
+            }, 2000);
         })
-            .then(({ data }) => {
-                const result = data;
-                if (result.code === 500) {
-                    this.message = result.err;
-                } else {
-                    localStorage.setItem("ncmDir", ncmDir);
-                    localStorage.setItem("mp3OutDir", mp3OutDir);
-                    localStorage.setItem("songCoverOutDir", songCoverOutDir);
-                    msgEn = result.msgEn;
-                    msgZh = result.msgZh;
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1000);
-                }
-                setTimeout(() => {
-                    msgZh = "↑ 点击";
-                    msgEn = "↑ Click";
-                }, 2000);
-            })
-            .catch((err) => {
-                msgZh = "ncm2mp3方法请求错误";
-                msgEn = "ncm2mp3 Request Error!";
-                setTimeout(() => {
-                    msgZh = "↑ 点击";
-                    msgEn = "↑ Click";
-                }, 2000);
-            });
+        .catch((err) => {
+            msgZh = "ncm2mp3方法请求错误";
+            msgEn = "ncm2mp3 Request Error!";
+            setTimeout(() => {
+                msgZh = "↑ 点击";
+                msgEn = "↑ Click";
+            }, 2000);
+        });
     }
 
     function calcBPM() {
         // @ts-ignore
-        const AudioContext: any =
-            window.AudioContext || window.webkitAudioContext;
+        const AudioContext: any = window.AudioContext || window.webkitAudioContext;
         const context = new AudioContext();
         // Fetch audio file
         axios({
@@ -119,6 +129,7 @@
             })
             .catch(console.error);
     }
+
 </script>
 
 <div class="container">
@@ -128,7 +139,7 @@
         <div class="center">
             <p>
                 ncm输入路径:
-                <input type="text" bind:value={ncmDir} />
+                <input type="text" bind:value={ncmDir}/>
             </p>
             <p>
                 mp3输出路径:
