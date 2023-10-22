@@ -13,10 +13,10 @@
 </p>
 
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com/?lines=Nemassler, NMSL&center=true&size=20"/> 
+  <span>English</span>
+  <span style="margin: 3px;">|</span>
+  <a href="./README_ZH.md" target="_blank">中文文档</a>
 </p>
-
-中文文档: [README_ZH.md](./README_ZH.md)
 
 This tool pack has 2 modules now:
 1. Transfer netease music `.ncm` format audio to `.mp3`

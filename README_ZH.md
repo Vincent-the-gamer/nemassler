@@ -12,10 +12,10 @@
 </p>
 
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com/?lines=Nemassler, NMSL&center=true&size=20"/> 
+  <a href="./README.md" target="_blank">English</a>
+  <span style="margin: 3px;">|</span>
+  <span>中文文档</span>
 </p>
-
-English Version: [README.md](./README.md)
 
 这个工具主要有俩功能:
 1. 把某yy音源的`.ncm` 格式音频转换为`.mp3`格式。
