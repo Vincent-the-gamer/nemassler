@@ -7,13 +7,41 @@ on:
       - 'v*.*.*'
 
 jobs:
-  release:
-    name: build and release electron app
+  # 任务：创建 release 版本
+  create-release:
+    runs-on: ubuntu-latest
+    outputs:
+      RELEASE_UPLOAD_ID: ${{ steps.create_release.outputs.id }}
+ 
+    steps:
+      - uses: actions/checkout@v2
+      # 查询版本号（tag）
+      - name: Query version number
+        id: get_version
+        shell: bash
+        run: |
+          echo "using version tag ${GITHUB_REF:10}"
+          echo ::set-output name=version::"${GITHUB_REF:10}"
+ 
+      # 根据查询到的版本号创建 release
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: '${{ steps.get_version.outputs.VERSION }}'
+          release_name: 'app ${{ steps.get_version.outputs.VERSION }}'
+          body: 'See the assets to download this version and install.'
 
+  build-electron:
+    name: build and release electron app
+    needs: create-release
     runs-on: ${{ matrix.os }}
     
     # create a build matrix for jobs
     strategy:
+      fail-fast: false
       matrix:
         os: [windows-latest, macos-latest]
 
@@ -24,7 +52,9 @@ jobs:
 
       # step2: install node env
       - name: Install Node.js
-        uses: actions/setup-node@v2-beta
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
 
       # step3: npm install
       - name: npm install
@@ -32,41 +62,13 @@ jobs:
           npm install && cd frontend && npm install
 
       # step4: build app for mac/win
-      - name: build windows app
-        if: matrix.os == 'windows-latest'
+      # 安装依赖执行构建，以及推送 github release
+      - name: Install app dependencies and build it
+
+      # package.json里面配置的编译命令
         run: |
           npm run build-app
-      
-      - name: build mac app
-        if: matrix.os == 'macos-latest'
-        run: |
-          npm run build-app
-
-      # step5: cleanup artifacts
-      - name: cleanup artifacts for windows
-        if: matrix.os == 'windows-latest'
-        run: |
-          npx rimraf "out/make/!(*.exe)"
-
-      - name: cleanup artifacts for macos
-        if: matrix.os == 'macos-latest'
-        run: |
-          npx rimraf "out/make/!(*.dmg)"
-
-      # step6: upload artifacts
-      - name: upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ matrix.os }}
-          path: out/make
-
-      # step7: create release
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: '${{ steps.get_version.outputs.VERSION }}'
-          release_name: 'app ${{ steps.get_version.outputs.VERSION }}'
-          body: 'See the assets to download this version and install.'
+          releaseId: ${{ needs.create-release.outputs.RELEASE_UPLOAD_ID }}
