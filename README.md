@@ -2,6 +2,10 @@
   <img src="./.github/TitleLogo.png" width="200" height="200"/>
 </p>
 <h1 align="center">Nemassler</h1>
+<p align="center">
+  A useful multiple function tool! <br/>
+  Mainly transform .ncm to .mp3 and calculate audio BPM.
+</p>
 
 <p align="center">
   <span style="font-size: 20px;">Powered By</span>
@@ -18,16 +22,10 @@
   <a href="./README_ZH.md" target="_blank">中文文档</a>
 </p>
 
-This tool pack has 2 modules now:
-1. Transfer netease music `.ncm` format audio to `.mp3`
-2. Calculate `beats per minute(BPM)` of these songs.
-
-## Usage
-
-### Download
+## Installation
 Download application from Release: 
 
-**Latest Version: v1.0.2**
+**Latest Version: v1.0.3**
 
 [https://github.com/Vincent-the-gamer/Nemassler/releases](https://github.com/Vincent-the-gamer/Nemassler/releases)
 
@@ -38,20 +36,20 @@ Can't open in macOS?
 * Press enter(aka return) button!!!
 * Re-open the application.
 
-### Get Started
-
-#### Page Overview
+## Page Overview
 
 ![page](./.github/page.png)
 
 You can choose either `English` or `Simplified Chinese` now.
 
-#### ncm -> mp3
+## Get Started
+
+### ncm -> mp3
 put your `.ncm` files in `your ncm input folder`, then click the `Convert All` button
 
 mp3 files and song cover will be generated in `your mp3 output folder`.
 
-#### Default Folders
+### Default Folders
 * Windows: 
     * ncm: C:\\Users\\Public\\ncm
     * mp3: C:\\Users\\Public\\mp3
@@ -61,8 +59,10 @@ mp3 files and song cover will be generated in `your mp3 output folder`.
     * mp3: /Users/Shared/mp3
     * songcover: /Users/Shared/songcover
 
-#### Calculate BPM（beats per minute）
+### Calculate BPM（beats per minute）
 choose your generated `.mp3` audios, or import your own `.mp3` audios into `your mp3 output folder` to calculate BPM.
+
+**And, a funny feature inside, but I can't tell more😁**
 
 ## Build from source code
 ~~~shell

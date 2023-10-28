@@ -6,6 +6,7 @@ const express = require("express")
 const ncm2mp3 = require("./ncm2mp3")
 const readFiles = require("./readFiles")
 const fileUtils = require("./fileUtils")
+const axios = require("axios")
 
 const app = express()
 
@@ -71,6 +72,20 @@ app.get("/readFiles",async (req, res) => {
 app.get("/getMp3File", (req, res) => {
     const filePath = req.query.filePath
     res.sendFile(filePath)
+})
+
+// get anime girls picture
+app.post("/meizi", (req, res) => {
+    const { isR18, num, author_uuid, keyword, tag } = req.body
+    const url = `https://sex.nyan.xyz/api/v2?r18=${isR18}&num=${num}`
+
+    author_uuid && (url += `&author_uuid=${author_uuid}`)
+    keyword && (url += `&keyword=${keyword}`)
+    tag && (url += `&tag=${tag}`)
+    
+    axios.get(url).then(({data}) => {
+        res.send(data)
+    })
 })
 
 app.listen(8080, () => {

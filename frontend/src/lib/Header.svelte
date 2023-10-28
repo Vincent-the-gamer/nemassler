@@ -1,16 +1,9 @@
 <script lang="ts">
     import Icon from "@/assets/icon.png";
+    import useElectronHref from "@/hooks/useElectronHref";
     import { language } from "@/store/languageStore";
 
-    // <a href> open a external browser window while in electron environment.
-    function electronHref(event) {
-        const url = "https://github.com/Vincent-the-gamer/Nemassler";
-        if (window.require !== undefined) {
-            const { shell } = require("electron");
-            event.preventDefault();
-            shell.openExternal(url);
-        } else window.location.href = url;
-    }
+    const electronHref = useElectronHref("https://github.com/Vincent-the-gamer/Nemassler")
 
     function changeLocalStorageLanguage() {
         localStorage.setItem("language", $language);
@@ -35,8 +28,9 @@
             <option value="zh">简体中文</option>
             <option value="en">English</option>
         </select>
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
         <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <div class="github" on:click={(e) => electronHref(e)}>GitHub</div>
+        <div class="github" on:click={ e => electronHref(e) }>GitHub</div>
     </span>
 </header>
 

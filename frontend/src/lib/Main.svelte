@@ -9,6 +9,7 @@
     import { onMount } from "svelte";
     import detect from "@/utils/detect";
     import judgePath from "@/utils/judgePath";
+    import { link } from "svelte-spa-router";
 
     /**
      * state
@@ -134,6 +135,9 @@
 
 <div class="container">
     {#if $language === "zh"}
+        <p class="other-func">
+           其它功能： <a class="route" href="/meizi" use:link>妹子图片</a>
+        </p>
         <h1>ncm转mp3</h1>
         <h2>将.ncm后缀文件放入ncm文件夹，然后点击以下按钮即可批量转mp3</h2>
         <div class="center">
@@ -176,6 +180,9 @@
     {/if}
 
     {#if $language === "en"}
+        <p class="other-func">
+             Other contents: <a class="route" href="/meizi" use:link>Anime Girls</a>
+        </p>
         <h1>ncm to mp3</h1>
         <h2>Put .ncm files into ncm folder, then click the button</h2>
         <div class="center">
@@ -222,6 +229,22 @@
 </div>
 
 <style lang="stylus">
+.route 
+    position relative
+    margin 0 auto
+    width fit-content
+    color white
+    background-color rgba(0, 0, 0, 0.5)
+    padding 10px
+    border 0
+    border-radius 6px
+    font-family DM Mono
+    transition all 0.3s
+    &:hover
+        background-color violet
+        box-shadow 0 0 15px black
+        cursor pointer
+
 .container
     position relative
     margin-top 70px
@@ -237,6 +260,8 @@
     p
         margin 10px auto
         width fit-content
+        &.other-func
+            margin 17px auto
     
 
     button

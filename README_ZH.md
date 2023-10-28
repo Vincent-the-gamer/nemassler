@@ -2,6 +2,10 @@
   <img src="./.github/TitleLogo.png" width="200" height="200"/>
 </p>
 <h1 align="center">Nemassler</h1>
+<p align="center">
+  一个很实用的多功能工具 <br/>
+  主要将.ncm音频文件转.mp3，还有计算音频BPM
+</p>
 
 <p align="center">
   <span style="font-size: 20px;">抛瓦来自</span>
@@ -17,13 +21,7 @@
   <span>中文文档</span>
 </p>
 
-这个工具主要有俩功能:
-1. 把某yy音源的`.ncm` 格式音频转换为`.mp3`格式。
-2. 计算`.mp3`格式音频的`每分钟节拍数(BPM)`。
-
-## 使用
-
-### 下载
+## 安装
 下载构建好的程序: 
 
 **最新版本: v1.0.2**
@@ -37,21 +35,20 @@ macOS提示已损坏，你应该把它扔到废纸篓?
 * 按下回车
 * 重新打开软件即可
 
-### 开始使用
-
-#### 页面总览
+## 页面总览
 
 ![页面](./.github/page-cn.png)
 
 现在，你可以在右上角切换语言了，有`简体中文`和`英语`。
 
-#### ncm -> mp3
+## 开始使用
+### ncm 转 mp3
 
 把需要转换的ncm全部放入`你的ncm输入路径`，然后点击页面:
 
 然后mp3和曲封面会输出到`你的mp3输出路径`下，自取就好
 
-#### 默认文件夹路径
+### 默认文件夹路径
 * Windows: 
     * ncm: C:\\Users\\public\\ncm
     * mp3: C:\\Users\\public\\mp3
@@ -61,8 +58,10 @@ macOS提示已损坏，你应该把它扔到废纸篓?
     * mp3: /Users/Shared/mp3
     * songcover: /Users/Shared/songcover
 
-#### 计算BPM（每分钟的节拍数）
+### 计算BPM（每分钟的节拍数）
 选择生成的mp3，或者自己手动导入mp3到`你的mp3输出路径`都行，这样就可以在页面下拉框找到你的歌曲，然后计算bpm。
+
+**顺便一提，里面加入了一个神秘功能😁**
 
 ## 从源代码构建
 ~~~shell
