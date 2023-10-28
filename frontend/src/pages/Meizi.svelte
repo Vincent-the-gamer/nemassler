@@ -52,16 +52,18 @@
             </p>
             <p>
                 <button on:click={ getPictures }
-                        disabled={ !getButtonAvailable }>GIMME DA PICCHA!</button>
+                        disabled={ !getButtonAvailable }>GIMME DA PICCHA(s)!</button>
                 <button on:click={ () => picList = [] }>Clear Pic List</button>
             </p>
             <div class="pic-area">
                 <h3>Pic Show Area</h3>
                 <div class="pictures">
                     {#each picList as picture}
-                        <a href={picture.url} target="_blank" title={picture.title}>
-                            <img src={picture.url} alt={picture.title}/>
-                        </a>
+                        <!-- svelte-ignore a11y-click-events-have-key-events -->
+                        <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+                        <img src={picture.url} alt={picture.title}
+                             title={picture.title} on:click={ useElectronHref(picture.url) }
+                        />
                     {/each}
                 </div>
             </div>
@@ -143,7 +145,7 @@
     
 
     button
-        width 100px
+        width fit-content
         height 35px
         margin 0 auto
         background-color black
