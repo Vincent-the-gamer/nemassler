@@ -6,7 +6,7 @@
             </p>
             <h1>妹子图片</h1>
             <p>
-                是否开启绅士(Hentai)模式: <input type="checkbox" bind:checked={ isHentai }/>
+                绅士(Hentai)模式: <input type="checkbox" bind:checked={ isHentai }/>
             </p>
             <p>
                 你要几张图片? <input type="number" bind:value={ number }
