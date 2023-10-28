@@ -45,25 +45,25 @@ jobs:
           npm run build-app
       
       # step5: cleanup artifacts
-      - name: cleanup artifacts for windows
+      - name: cleanup artifacts for Windows
         if: matrix.os == 'windows-latest'
         run: |
           npx rimraf "out/make/zip/win32/x64/!(*.zip)"
 
-      - name: cleanup artifacts for macos
+      - name: cleanup artifacts for macOS
         if: matrix.os == 'macos-latest'
         run: |
           npx rimraf "out/make/!(*.dmg)"
 
       # step6: upload artifacts
-      - name: upload artifacts
+      - name: upload artifacts for macOS
         if: matrix.os == 'macos-latest'
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.os }}
           path: out/make
         
-      - name: upload artifacts
+      - name: upload artifacts for Windows
         if: matrix.os == 'windows-latest'
         uses: actions/upload-artifact@v2
         with:
@@ -71,10 +71,22 @@ jobs:
           path: out/make/zip/win32/x64
 
       # step7: create release
-      - name: release
+      - name: release for macOS
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
+        if: | 
+          startsWith(github.ref, 'refs/tags/')
+          matrix.os == 'macos-latest'
         with:
           files: "out/make/**"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: release for Window
+        uses: softprops/action-gh-release@v1
+        if: | 
+          startsWith(github.ref, 'refs/tags/')
+          matrix.os == 'windows-latest'
+        with: 
+          files: "out/make/zip/win32/x64/**"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
