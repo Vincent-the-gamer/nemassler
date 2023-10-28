@@ -48,20 +48,27 @@ jobs:
       - name: cleanup artifacts for windows
         if: matrix.os == 'windows-latest'
         run: |
-          npx rimraf "out/make/!(*.zip)"
+          npx rimraf "out/make/zip/win32/x64/!(*.zip)"
 
       - name: cleanup artifacts for macos
         if: matrix.os == 'macos-latest'
         run: |
           npx rimraf "out/make/!(*.dmg)"
 
-  
       # step6: upload artifacts
       - name: upload artifacts
+        if: matrix.os == 'macos-latest'
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.os }}
           path: out/make
+        
+      - name: upload artifacts
+        if: matrix.os == 'windows-latest'
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.os }}
+          path: out/make/zip/win32/x64
 
       # step7: create release
       - name: release
