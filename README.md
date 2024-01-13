@@ -58,6 +58,10 @@ mp3 files and song cover will be generated in `your mp3 output folder`.
     * ncm: /Users/Shared/ncm
     * mp3: /Users/Shared/mp3
     * songcover: /Users/Shared/songcover
+* Linux
+    * ncm: ~/Public/ncm
+    * mp3: ~/Public/mp3
+    * songcover: ~/Public/songcover
 
 ### Calculate BPM（beats per minute）
 choose your generated `.mp3` audios, or import your own `.mp3` audios into `your mp3 output folder` to calculate BPM.

@@ -57,6 +57,10 @@ macOS提示已损坏，你应该把它扔到废纸篓?
     * ncm: /Users/Shared/ncm
     * mp3: /Users/Shared/mp3
     * songcover: /Users/Shared/songcover
+* Linux
+    * ncm: ~/Public/ncm
+    * mp3: ~/Public/mp3
+    * songcover: ~/Public/songcover
 
 ### 计算BPM（每分钟的节拍数）
 选择生成的mp3，或者自己手动导入mp3到`你的mp3输出路径`都行，这样就可以在页面下拉框找到你的歌曲，然后计算bpm。
