@@ -1,4 +1,5 @@
 import useCurrentPlatform from "@/hooks/useCurrentPlatform"
+import os from "os"
 
 // init directorys
 export function getNcmDir(){
@@ -10,7 +11,7 @@ export function getNcmDir(){
         } else if(platform === "mac") {
             return `/Users/Shared/ncm`
         }
-        else return `~/Public/ncm` 
+        else return `/home/${os.userInfo().username}/Public/ncm` 
     }
 }
 
@@ -23,7 +24,7 @@ export function getMp3OutDir(){
         } else if(platform === "mac") {
             return `/Users/Shared/mp3` 
         }
-        else return `~/Public/mp3` 
+        else return `/home/${os.userInfo().username}/Public/mp3` 
     } 
 }
 
@@ -36,6 +37,6 @@ export function getSongCoverOutDir(){
         } else if(platform === "mac") {
             return `/Users/Shared/songcover` 
         }
-        else return `~/Public/songcover` 
+        else return `/home/${os.userInfo().username}/Public/songcover` 
     }
 }
