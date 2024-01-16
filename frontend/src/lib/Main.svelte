@@ -131,6 +131,19 @@
             .catch(console.error);
     }
 
+    // filter mp3
+    function filterMp3(){
+        axios.post("/filterMp3", {
+            directory: mp3OutDir
+        }).then(res => {
+            msgEn = res.data;
+            msgZh = res.data;
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        })
+    }
+
 </script>
 
 <div class="container">
@@ -155,6 +168,8 @@
             </p>
             <p>
                 <button on:click={customNcm2mp3}>批量转mp3</button>
+                <button style="width: fit-content;"
+                        on:click={ filterMp3 }>删除mp3文件夹中非mp3后缀文件</button>
             </p>
         </div>
         <h3>{msgZh}</h3>

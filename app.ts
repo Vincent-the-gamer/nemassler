@@ -4,7 +4,7 @@
 import path from "path"
 import express from "express"
 import readFiles from "./readFiles"
-import { ensureDirectoryExists } from "./fileUtils"
+import { ensureDirectoryExists, filterMp3 } from "./fileUtils"
 import axios from "axios"
 import ncm2mp3CustomDirectory from "./ncm2mp3"
 
@@ -86,6 +86,13 @@ app.post("/meizi", (req: any, res: any) => {
     axios.get(url).then(({data}) => {
         res.send(data)
     })
+})
+
+// filter mp3
+app.post("/filterMp3", async (req: any, res: any) => {
+    const { directory } = req.body
+    const result = await filterMp3(directory)
+    res.send(result)
 })
 
 app.listen(8080, () => {
