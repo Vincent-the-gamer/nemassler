@@ -22,7 +22,7 @@
   <a href="./README_ZH.md" target="_blank">中文文档</a>
 </p>
 
-## Installation
+# Installation
 Download application from Release: 
 
 **Latest Version: v1.0.4**
@@ -36,20 +36,20 @@ Can't open in macOS?
 * Press enter(aka return) button!!!
 * Re-open the application.
 
-## Page Overview
+# Page Overview
 
 ![page](./.github/page.png)
 
 You can choose either `English` or `Simplified Chinese` now.
 
-## Get Started
+# Get Started
 
-### ncm -> mp3
+## ncm -> mp3
 put your `.ncm` files in `your ncm input folder`, then click the `Convert All` button
 
 mp3 files and song cover will be generated in `your mp3 output folder`.
 
-### Default Folders
+## Default Folders
 * Windows: 
     * ncm: C:\\Users\\Public\\ncm
     * mp3: C:\\Users\\Public\\mp3
@@ -63,14 +63,20 @@ mp3 files and song cover will be generated in `your mp3 output folder`.
     * mp3: /home/{user_name}/Public/mp3
     * songcover: /home/{user_name}/Public/songcover
 
-### Calculate BPM（beats per minute）
+## Calculate BPM（beats per minute）
 choose your generated `.mp3` audios, or import your own `.mp3` audios into `your mp3 output folder` to calculate BPM.
 
 **And, a funny feature inside, but I can't tell more😁**
 
-## Build from source code
+# Build from source code
 ~~~shell
 git clone https://github.com/Vincent-the-gamer/Nemassler.git
 
 npm run build-app
 ~~~
+
+# Changelog
+View [Changelog](./CHANGELOG.md)
+
+# License
+[MIT](./LICENSE)
