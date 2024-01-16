@@ -1,6 +1,6 @@
-const fs = require("fs")
+import fs from "fs"
 
-module.exports.ensureDirectoryExists = async (directory) => {
+export async function ensureDirectoryExists(directory: string) {
     return new Promise((resolve, reject) => {
         if (!fs.existsSync(directory)) {
             fs.mkdir(directory, {recursive:true}, (err) => {

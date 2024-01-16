@@ -1,12 +1,12 @@
 /**
  * Main Service
  */
-const path = require("path")
-const express = require("express")
-const ncm2mp3 = require("./ncm2mp3")
-const readFiles = require("./readFiles")
-const fileUtils = require("./fileUtils")
-const axios = require("axios")
+import path from "path"
+import express from "express"
+import readFiles from "./readFiles"
+import { ensureDirectoryExists } from "./fileUtils"
+import axios from "axios"
+import ncm2mp3CustomDirectory from "./ncm2mp3"
 
 const app = express()
 
@@ -19,7 +19,7 @@ app.use( express.static(
 /**
  * Cross Origin
  */
-app.all("*", (req, res, next) => {
+app.all("*", (req: any, res: any, next: Function) => {
     res.header("Access-Control-Allow-Origin","*");
     res.header("Access-Control-Allow-Headers", "Content-Type,XFILENAME,XFILECATEGORY,XFILESIZE");
     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
@@ -29,14 +29,14 @@ app.all("*", (req, res, next) => {
 
 
 // ncm to mp3
-app.post("/customNcm2mp3", async (req, res) => {
+app.post("/customNcm2mp3", async (req: any, res: any) => {
     try{
         Promise.all([
-            fileUtils.ensureDirectoryExists(req.body.ncmDir),
-            fileUtils.ensureDirectoryExists(req.body.mp3OutDir),
-            fileUtils.ensureDirectoryExists(req.body.songCoverOutDir)
+            ensureDirectoryExists(req.body.ncmDir),
+            ensureDirectoryExists(req.body.mp3OutDir),
+            ensureDirectoryExists(req.body.songCoverOutDir)
         ]).then(([r1,r2,r3]) => {
-            ncm2mp3.ncm2mp3CustomDirectory(
+            ncm2mp3CustomDirectory(
                 req.body.ncmDir,
                 req.body.mp3OutDir,
                 req.body.songCoverOutDir
@@ -57,8 +57,8 @@ app.post("/customNcm2mp3", async (req, res) => {
 })
 
 // scan mp3 folder
-app.get("/readFiles",async (req, res) => {
-    const files = await readFiles.readFiles(
+app.get("/readFiles",async (req: any, res: any) => {
+    const files = await readFiles(
         req.query.mp3Dir,
         req.query.ncmDir,
         req.query.songCoverDir
@@ -69,15 +69,15 @@ app.get("/readFiles",async (req, res) => {
 })
 
 // read mp3 file
-app.get("/getMp3File", (req, res) => {
+app.get("/getMp3File", (req: any, res: any) => {
     const filePath = req.query.filePath
     res.sendFile(filePath)
 })
 
 // get anime girls picture
-app.post("/meizi", (req, res) => {
+app.post("/meizi", (req: any, res: any) => {
     const { isR18, num, author_uuid, keyword, tag } = req.body
-    const url = `https://sex.nyan.xyz/api/v2?r18=${isR18}&num=${num}`
+    let url: string = `https://sex.nyan.xyz/api/v2?r18=${isR18}&num=${num}`
 
     author_uuid && (url += `&author_uuid=${author_uuid}`)
     keyword && (url += `&keyword=${keyword}`)

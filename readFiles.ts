@@ -1,12 +1,12 @@
-const fs = require('fs');
-const path = require('path');
-const fileUtils = require("./fileUtils")
+import fs from "fs"
+import path from "path"
+import { ensureDirectoryExists } from "./fileUtils"
 
-module.exports.readFiles = async (mp3Dir, ncmDir, songCoverOutDir) => {
+export default async function readFiles(mp3Dir: string, ncmDir: string, songCoverOutDir: string) {
     // ensure directories exist
-    await fileUtils.ensureDirectoryExists(mp3Dir)
-    await fileUtils.ensureDirectoryExists(ncmDir)
-    await fileUtils.ensureDirectoryExists(songCoverOutDir)
+    await ensureDirectoryExists(mp3Dir)
+    await ensureDirectoryExists(ncmDir)
+    await ensureDirectoryExists(songCoverOutDir)
 
     return new Promise((resolve, reject) => {
         fs.readdir(path.resolve(__dirname, mp3Dir), (err, files) => { 
@@ -26,4 +26,3 @@ module.exports.readFiles = async (mp3Dir, ncmDir, songCoverOutDir) => {
         }) 
     })
 }
-

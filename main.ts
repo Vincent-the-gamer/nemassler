@@ -1,8 +1,4 @@
-if (require('electron-squirrel-startup')) return
-
-require('./app.js')
-
-const { app, BrowserWindow, Menu } = require('electron')
+const { app, BrowserWindow, Menu } = require("electron")
 const path = require("path")
 
 function start() {
@@ -14,6 +10,7 @@ function start() {
   }
   else Menu.setApplicationMenu(null)
 
+  // @ts-expect-error
   mainWindow = new BrowserWindow({
     icon: path.join(__dirname, "./buildIcon/icon.png"),
     width: 1280,
@@ -21,13 +18,17 @@ function start() {
     webPreferences:{ 
         nodeIntegration: true, 
         contextIsolation: false, 
+        // @ts-expect-error
         enableRemoteModule: true, 
     },
   });
 
+  // @ts-expect-error
   mainWindow.on('close', () => {
+    // @ts-expect-error
     mainWindow = null
   })
+  // @ts-expect-error
   mainWindow.loadURL(`http://127.0.0.1:8080`);
 };
 
@@ -41,6 +42,7 @@ app.on('window-all-closed', function () {
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
+  // @ts-expect-error
   if (mainWindow === null) {
     start()
   }

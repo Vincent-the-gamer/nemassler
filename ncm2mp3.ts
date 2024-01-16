@@ -1,14 +1,13 @@
 /**
  * netease music .ncm audio to mp3
  */
-
-const fs = require('fs');
-const aes = require('aes-js');
-const path = require("path");
+import fs from "fs"
+import aes from "aes-js"
+import path from "path"
 
 // 前置文件检查
-async function preCheck(ncmDir){
-    return new Promise((resolve, reject) => {
+async function preCheck(ncmDir): Promise<any>{
+    return new Promise<void>((resolve, reject) => {
         // 删除 macOS .DS_Store 文件
         if(fs.existsSync(ncmDir + "/.DS_Store")){
             fs.unlink(ncmDir + "/.DS_Store", (err) => {
@@ -26,7 +25,7 @@ async function preCheck(ncmDir){
                     if( !filePath.trim().endsWith(".ncm") ) {
                         fs.unlink(filePath, err => {
                             if (err) {
-                                reject("Error deleting file:", filePath, err)
+                                reject(`Error deleting file: ${filePath}, ${err}`)
                             }
                         })
                     }
@@ -38,7 +37,7 @@ async function preCheck(ncmDir){
     })
 }
 
-module.exports.ncm2mp3CustomDirectory = async (ncmDir, mp3OutDir, songCoverOutDir) => {
+export default async function ncm2mp3CustomDirectory (ncmDir: string, mp3OutDir: string, songCoverOutDir: string) {
     preCheck(ncmDir).then(success => {
         fs.readdir(path.resolve(__dirname, ncmDir), function (err, files) {
             files.forEach(v => {
@@ -134,7 +133,7 @@ module.exports.ncm2mp3CustomDirectory = async (ncmDir, mp3OutDir, songCoverOutDi
                     const box = buildKeyBox(trimKeyData);
         
                     let n = 0x8000;
-                    let fmusic = [];
+                    let fmusic: Buffer[] = [];
                     while (n > 1) {
                         const buffer = Buffer.alloc(n);
                         n = file.copy(buffer, 0, globalOffset, globalOffset + n);
