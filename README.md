@@ -25,7 +25,7 @@
 ## Installation
 Download application from Release: 
 
-**Latest Version: v1.0.3**
+**Latest Version: v1.0.4**
 
 [https://github.com/Vincent-the-gamer/Nemassler/releases](https://github.com/Vincent-the-gamer/Nemassler/releases)
 

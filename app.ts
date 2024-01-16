@@ -1,49 +1,51 @@
 /**
  * Main Service
  */
-import path from "path"
-import express from "express"
-import readFiles from "./readFiles"
-import { ensureDirectoryExists, filterMp3 } from "./fileUtils"
-import axios from "axios"
-import ncm2mp3CustomDirectory from "./ncm2mp3"
+// @ts-ignore
+const path = require("path")
+const express = require("express")
+const readFiles = require("./readFiles.ts")
+// @ts-ignore
+const fileUtils = require("./fileUtils.ts")
+const axios = require("axios")
+const ncm2mp3 = require("./ncm2mp3.ts")
 
-const app = express()
+const expressApp = express()
 
-app.use( express.json() )
-app.use( express.urlencoded({ extended: false }) )
-app.use( express.static(
+expressApp.use(express.json())
+expressApp.use(express.urlencoded({ extended: false }))
+expressApp.use(express.static(
     path.resolve(__dirname, "./frontend/dist")
 ))
 
 /**
  * Cross Origin
  */
-app.all("*", (req: any, res: any, next: Function) => {
-    res.header("Access-Control-Allow-Origin","*");
+expressApp.all("*", (req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Content-Type,XFILENAME,XFILECATEGORY,XFILESIZE");
-    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-    res.header("X-Powered-By",' 3.2.1');
+    res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By", ' 3.2.1');
     next();
 });
 
 
 // ncm to mp3
-app.post("/customNcm2mp3", async (req: any, res: any) => {
-    try{
+expressApp.post("/customNcm2mp3", async (req, res) => {
+    try {
         Promise.all([
-            ensureDirectoryExists(req.body.ncmDir),
-            ensureDirectoryExists(req.body.mp3OutDir),
-            ensureDirectoryExists(req.body.songCoverOutDir)
-        ]).then(([r1,r2,r3]) => {
-            ncm2mp3CustomDirectory(
+            fileUtils.ensureDirectoryExists(req.body.ncmDir),
+            fileUtils.ensureDirectoryExists(req.body.mp3OutDir),
+            fileUtils.ensureDirectoryExists(req.body.songCoverOutDir)
+        ]).then(([r1, r2, r3]) => {
+            ncm2mp3.ncm2mp3CustomDirectory(
                 req.body.ncmDir,
                 req.body.mp3OutDir,
                 req.body.songCoverOutDir
             )
         })
     }
-    catch(err){
+    catch (err) {
         res.send({
             code: 500,
             err
@@ -57,8 +59,8 @@ app.post("/customNcm2mp3", async (req: any, res: any) => {
 })
 
 // scan mp3 folder
-app.get("/readFiles",async (req: any, res: any) => {
-    const files = await readFiles(
+expressApp.get("/readFiles", async (req, res) => {
+    const files = await readFiles.readFiles(
         req.query.mp3Dir,
         req.query.ncmDir,
         req.query.songCoverDir
@@ -69,33 +71,33 @@ app.get("/readFiles",async (req: any, res: any) => {
 })
 
 // read mp3 file
-app.get("/getMp3File", (req: any, res: any) => {
+expressApp.get("/getMp3File", (req, res) => {
     const filePath = req.query.filePath
     res.sendFile(filePath)
 })
 
 // get anime girls picture
-app.post("/meizi", (req: any, res: any) => {
+expressApp.post("/meizi", (req, res) => {
     const { isR18, num, author_uuid, keyword, tag } = req.body
-    let url: string = `https://sex.nyan.xyz/api/v2?r18=${isR18}&num=${num}`
+    let url = `https://sex.nyan.xyz/api/v2?r18=${isR18}&num=${num}`
 
     author_uuid && (url += `&author_uuid=${author_uuid}`)
     keyword && (url += `&keyword=${keyword}`)
     tag && (url += `&tag=${tag}`)
-    
-    axios.get(url).then(({data}) => {
+
+    axios.get(url).then(({ data }) => {
         res.send(data)
     })
 })
 
 // filter mp3
-app.post("/filterMp3", async (req: any, res: any) => {
+expressApp.post("/filterMp3", async (req, res) => {
     const { directory } = req.body
-    const result = await filterMp3(directory)
+    const result = await fileUtils.filterMp3(directory)
     res.send(result)
 })
 
-app.listen(8080, () => {
+expressApp.listen(8080, () => {
     console.log("Server started at: http://127.0.0.1:8080")
 })
 

@@ -24,7 +24,7 @@
 ## 安装
 下载构建好的程序: 
 
-**最新版本: v1.0.3**
+**最新版本: v1.0.4**
 
 [https://github.com/Vincent-the-gamer/Nemassler/releases](https://github.com/Vincent-the-gamer/Nemassler/releases)
 

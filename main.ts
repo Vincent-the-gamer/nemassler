@@ -1,12 +1,19 @@
+// @ts-ignore
+if (require('electron-squirrel-startup')) return
+
+require('./app.ts')
+
+// @ts-ignore
 const { app, BrowserWindow, Menu } = require("electron")
+// @ts-ignore
 const path = require("path")
 
 function start() {
   // Hide Menu
   if(process.platform === "darwin"){
     // on macOS: Hide Menu by setting it to a empty array
-    const menu = Menu.buildFromTemplate([])
-    Menu.setApplicationMenu(menu)
+    // const menu = Menu.buildFromTemplate([])
+    // Menu.setApplicationMenu(menu)
   }
   else Menu.setApplicationMenu(null)
 
@@ -18,7 +25,7 @@ function start() {
     webPreferences:{ 
         nodeIntegration: true, 
         contextIsolation: false, 
-        // @ts-expect-error
+        // @ts-ignore
         enableRemoteModule: true, 
     },
   });

@@ -1,7 +1,9 @@
-import fs from "fs"
-import path from "path"
+// @ts-ignore
+const fs = require("fs")
+// @ts-ignore
+const path = require("path")
 
-export async function ensureDirectoryExists(directory: string) {
+module.exports.ensureDirectoryExists = async (directory) => {
     return new Promise((resolve, reject) => {
         if (!fs.existsSync(directory)) {
             fs.mkdir(directory, {recursive:true}, (err) => {
@@ -15,7 +17,7 @@ export async function ensureDirectoryExists(directory: string) {
 /**
  * 删除mp3文件夹中非mp3文件
  */
-export async function filterMp3(directory: string): Promise<string> {
+module.exports.filterMp3 = async(directory) => {
     if (!fs.existsSync(directory)) {
        return Promise.reject("未找到路径！directory not found!")
     }

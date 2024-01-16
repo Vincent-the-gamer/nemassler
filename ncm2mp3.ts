@@ -1,13 +1,15 @@
 /**
  * netease music .ncm audio to mp3
  */
-import fs from "fs"
-import aes from "aes-js"
-import path from "path"
+// @ts-ignore
+const fs = require("fs")
+const aes = require("aes-js")
+// @ts-ignore
+const path = require("path")
 
 // 前置文件检查
-async function preCheck(ncmDir): Promise<any>{
-    return new Promise<void>((resolve, reject) => {
+async function preCheck(ncmDir){
+    return new Promise((resolve, reject) => {
         // 删除 macOS .DS_Store 文件
         if(fs.existsSync(ncmDir + "/.DS_Store")){
             fs.unlink(ncmDir + "/.DS_Store", (err) => {
@@ -33,11 +35,11 @@ async function preCheck(ncmDir): Promise<any>{
             })
         }
 
-        resolve()
+        resolve("")
     })
 }
 
-export default async function ncm2mp3CustomDirectory (ncmDir: string, mp3OutDir: string, songCoverOutDir: string) {
+module.exports.ncm2mp3CustomDirectory = async (ncmDir, mp3OutDir, songCoverOutDir) => {
     preCheck(ncmDir).then(success => {
         fs.readdir(path.resolve(__dirname, ncmDir), function (err, files) {
             files.forEach(v => {
@@ -133,7 +135,7 @@ export default async function ncm2mp3CustomDirectory (ncmDir: string, mp3OutDir:
                     const box = buildKeyBox(trimKeyData);
         
                     let n = 0x8000;
-                    let fmusic: Buffer[] = [];
+                    let fmusic = [];
                     while (n > 1) {
                         const buffer = Buffer.alloc(n);
                         n = file.copy(buffer, 0, globalOffset, globalOffset + n);
@@ -143,7 +145,7 @@ export default async function ncm2mp3CustomDirectory (ncmDir: string, mp3OutDir:
                             let j = (i + 1) & 0xff;
                             buffer[i] ^= box[(box[j] + box[(box[j] + j) & 0xff]) & 0xff];
                         }
-        
+                        // @ts-ignore
                         fmusic.push(buffer);
                     }
                     fs.writeFileSync(path.resolve(__dirname, mp3OutDir) + "/" + v.replace(/.ncm/, '.mp3'), Buffer.concat(fmusic));

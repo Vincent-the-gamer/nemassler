@@ -1,12 +1,15 @@
-import fs from "fs"
-import path from "path"
-import { ensureDirectoryExists } from "./fileUtils"
+// @ts-ignore
+const fileUtils = require("./fileUtils.ts")
+// @ts-ignore
+const fs = require("fs")
+// @ts-ignore
+const path = require("path")
 
-export default async function readFiles(mp3Dir: string, ncmDir: string, songCoverOutDir: string) {
+module.exports.readFiles = async (mp3Dir, ncmDir, songCoverOutDir) => {
     // ensure directories exist
-    await ensureDirectoryExists(mp3Dir)
-    await ensureDirectoryExists(ncmDir)
-    await ensureDirectoryExists(songCoverOutDir)
+    await fileUtils.ensureDirectoryExists(mp3Dir)
+    await fileUtils.ensureDirectoryExists(ncmDir)
+    await fileUtils.ensureDirectoryExists(songCoverOutDir)
 
     return new Promise((resolve, reject) => {
         fs.readdir(path.resolve(__dirname, mp3Dir), (err, files) => { 
