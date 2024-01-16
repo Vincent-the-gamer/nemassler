@@ -215,6 +215,8 @@
             </p>
             <p>
                 <button on:click={customNcm2mp3}>Convert All</button>
+                <button style="width: fit-content;"
+                        on:click={ filterMp3 }>Filter non-mp3 files</button>
             </p>
         </div>
         <h3>{msgEn}</h3>
