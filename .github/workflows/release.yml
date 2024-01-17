@@ -74,7 +74,7 @@ jobs:
       - name: release for macOS
         uses: softprops/action-gh-release@v1
         if: | 
-          startsWith(github.ref, 'refs/tags/')
+          startsWith(github.ref, 'refs/tags/') &&
           matrix.os == 'macos-latest'
         with:
           files: "out/make/**"
@@ -84,7 +84,7 @@ jobs:
       - name: release for Window
         uses: softprops/action-gh-release@v1
         if: | 
-          startsWith(github.ref, 'refs/tags/')
+          startsWith(github.ref, 'refs/tags/') &&
           matrix.os == 'windows-latest'
         with: 
           files: "out/make/zip/win32/x64/**"
