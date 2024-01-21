@@ -7,7 +7,7 @@
     } from "@/utils/initDirectories";
     import axios from "@/utils/axios";
     import { onMount } from "svelte";
-    import detect from "@/utils/detect";
+    import { detectBPM } from "@vincent-the-gamer/utils"
     import judgePath from "@/utils/judgePath";
     import { link } from "svelte-spa-router";
 
@@ -121,12 +121,12 @@
                 // Get response as ArrayBuffer
                 const buffer = res.data;
                 // Decode audio into an AudioBuffer
-                const data = await new Promise(function (resolve, reject) {
+                const data: AudioBuffer = await new Promise(function (resolve, reject) {
                     context.decodeAudioData(buffer, resolve, reject);
                 });
 
                 // Run detection
-                bpm = detect(data) * 1;
+                bpm = (detectBPM(data) as any) * 1;
             })
             .catch(console.error);
     }
