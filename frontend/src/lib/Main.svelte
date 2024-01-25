@@ -7,7 +7,7 @@
     } from "@/utils/initDirectories";
     import axios from "@/utils/axios";
     import { onMount } from "svelte";
-    import { detectBPM } from "@vincent-the-gamer/utils"
+    import { detectBPM } from "@vincent-the-gamer/utils/client"
     import judgePath from "@/utils/judgePath";
     import { link } from "svelte-spa-router";
 

@@ -1,15 +1,14 @@
-import useCurrentPlatform from "@/hooks/useCurrentPlatform"
+import { getCurrentPlatform } from "@vincent-the-gamer/utils";
 
 export default function judgePath(path: string): boolean{
     const winDirRegex: RegExp = /^[A-Z]:\\(?:[^<>:"/\\|?*]+\\)*[^<>:"/\\|?*]+$/
     const macOrLinuxRegex: RegExp = /^\/(?:[^/]+\/)*[^/]+$/
 
-    const currentPlatform = useCurrentPlatform();
+    const currentPlatform = getCurrentPlatform();
     switch (currentPlatform) {
-        case "win32":
-        case "win64":
+        case "windows":
             return winDirRegex.test(path)
-        case "mac":
+        case "macOS":
         case "linux":
             return macOrLinuxRegex.test(path)
         default:
