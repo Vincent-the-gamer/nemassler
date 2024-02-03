@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { language } from "@/store/languageStore";
     import {
         getNcmDir,
         getMp3OutDir,
@@ -7,9 +6,11 @@
     } from "@/utils/initDirectories";
     import axios from "@/utils/axios";
     import { onMount } from "svelte";
-    import { detectBPM } from "@vincent-the-gamer/utils/client"
+    import { detectBPM } from "@vincent-the-gamer/utils/client";
     import judgePath from "@/utils/judgePath";
     import { link } from "svelte-spa-router";
+    import { _, locale } from "svelte-i18n"
+    import { get } from "svelte/store";
 
     /**
      * state
@@ -28,9 +29,6 @@
      */
     onMount(async () => {
         await loadMp3Files();
-        localStorage.getItem("language")
-            ? language.set(localStorage.getItem("language") as string)
-            : localStorage.setItem("language", $language);
     });
 
     /**
@@ -39,7 +37,7 @@
     async function loadMp3Files() {
         return axios
             .get(
-                `/readFiles?mp3Dir=${mp3OutDir}&ncmDir=${ncmDir}&songCoverDir=${songCoverOutDir}`
+                `/readFiles?mp3Dir=${mp3OutDir}&ncmDir=${ncmDir}&songCoverDir=${songCoverOutDir}`,
             )
             .then(({ data }) => {
                 files = data.files;
@@ -57,14 +55,18 @@
 
     function customNcm2mp3() {
         // check input path
-        if(!judgePath(ncmDir) || !judgePath(mp3OutDir) || !judgePath(songCoverOutDir)) {
+        if (
+            !judgePath(ncmDir) ||
+            !judgePath(mp3OutDir) ||
+            !judgePath(songCoverOutDir)
+        ) {
             msgZh = "路径格式错误！";
             msgEn = "Path format error!";
             setTimeout(() => {
                 msgZh = "↑ 点击";
                 msgEn = "↑ Click";
             }, 2000);
-            return
+            return;
         }
         axios({
             url: "/customNcm2mp3",
@@ -77,34 +79,35 @@
             headers: {
                 "Content-Type": "application/json",
             },
-        }).then(({ data }) => {
-            const result = data;
-            if (result.code === 500) {
-                // @ts-ignore
-                this.message = result.err;
-            } else {
-                localStorage.setItem("ncmDir", ncmDir);
-                localStorage.setItem("mp3OutDir", mp3OutDir);
-                localStorage.setItem("songCoverOutDir", songCoverOutDir);
-                msgEn = result.msgEn;
-                msgZh = result.msgZh;
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
-            }
-            setTimeout(() => {
-                msgZh = "↑ 点击";
-                msgEn = "↑ Click";
-            }, 2000);
         })
-        .catch((err) => {
-            msgZh = "ncm2mp3方法请求错误";
-            msgEn = "ncm2mp3 Request Error!";
-            setTimeout(() => {
-                msgZh = "↑ 点击";
-                msgEn = "↑ Click";
-            }, 2000);
-        });
+            .then(({ data }) => {
+                const result = data;
+                if (result.code === 500) {
+                    // @ts-ignore
+                    this.message = result.err;
+                } else {
+                    localStorage.setItem("ncmDir", ncmDir);
+                    localStorage.setItem("mp3OutDir", mp3OutDir);
+                    localStorage.setItem("songCoverOutDir", songCoverOutDir);
+                    msgEn = result.msgEn;
+                    msgZh = result.msgZh;
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+                }
+                setTimeout(() => {
+                    msgZh = "↑ 点击";
+                    msgEn = "↑ Click";
+                }, 2000);
+            })
+            .catch((err) => {
+                msgZh = "ncm2mp3方法请求错误";
+                msgEn = "ncm2mp3 Request Error!";
+                setTimeout(() => {
+                    msgZh = "↑ 点击";
+                    msgEn = "↑ Click";
+                }, 2000);
+            });
     }
 
     function calcBPM() {
@@ -121,7 +124,10 @@
                 // Get response as ArrayBuffer
                 const buffer = res.data;
                 // Decode audio into an AudioBuffer
-                const data: AudioBuffer = await new Promise(function (resolve, reject) {
+                const data: AudioBuffer = await new Promise(function (
+                    resolve,
+                    reject,
+                ) {
                     context.decodeAudioData(buffer, resolve, reject);
                 });
 
@@ -132,117 +138,67 @@
     }
 
     // filter mp3
-    function filterMp3(){
-        axios.post("/filterMp3", {
-            directory: mp3OutDir
-        }).then(res => {
-            msgEn = res.data;
-            msgZh = res.data;
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000);
-        })
+    function filterMp3() {
+        axios
+            .post("/filterMp3", {
+                directory: mp3OutDir,
+            })
+            .then((res) => {
+                msgEn = res.data;
+                msgZh = res.data;
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            });
     }
-
 </script>
 
 <div class="container">
-    {#if $language === "zh"}
-        <p class="other-func">
-           其它功能： <a class="route" href="/meizi" use:link>妹子图片</a>
+    <p class="other-func">
+        {$_("other-func")}： <a class="route" href="/meizi" use:link>{$_("anime-pics")}</a>
+    </p>
+    <h1>{$_("ncm2mp3")}</h1>
+    <h2>{$_("description")}</h2>
+    <div class="center">
+        <p>
+            {$_("ncmInput")}:
+            <input type="text" bind:value={ncmDir} />
         </p>
-        <h1>ncm转mp3</h1>
-        <h2>将.ncm后缀文件放入ncm文件夹，然后点击以下按钮即可批量转mp3</h2>
-        <div class="center">
-            <p>
-                ncm输入路径:
-                <input type="text" bind:value={ncmDir}/>
-            </p>
-            <p>
-                mp3输出路径:
-                <input type="text" bind:value={mp3OutDir} />
-            </p>
-            <p>
-                歌曲封面输出路径:
-                <input type="text" bind:value={songCoverOutDir} />
-            </p>
-            <p>
-                <button on:click={customNcm2mp3}>批量转mp3</button>
-                <button style="width: fit-content;"
-                        on:click={ filterMp3 }>删除mp3文件夹中非mp3后缀文件</button>
-            </p>
-        </div>
-        <h3>{msgZh}</h3>
-        <hr />
-        <h1>计算BPM</h1>
-        <h2>选择文件夹里面已有的mp3文件 (xxx.mp3), 计算BPM</h2>
-        <div class="center">
-            {#if files.length > 0}
-                <select class="select-bpm" bind:value={mp3FileName}>
-                    {#each files as item}
-                        <option value={item}>{item}</option>
-                    {/each}
-                </select>
-            {:else}
-                <select class="select-bpm">
-                    <option value="">没有待检测bpm的mp3文件</option>
-                </select>
-            {/if}
-            <button on:click={calcBPM}>计算BPM</button>
-            <button on:click={loadMp3Files}>刷新</button>
-            <h3>BPM: {bpm}</h3>
-        </div>
-    {/if}
-
-    {#if $language === "en"}
-        <p class="other-func">
-             Other contents: <a class="route" href="/meizi" use:link>Anime Girls</a>
+        <p>
+            {$_("mp3Output")}:
+            <input type="text" bind:value={mp3OutDir} />
         </p>
-        <h1>ncm to mp3</h1>
-        <h2>Put .ncm files into ncm folder, then click the button</h2>
-        <div class="center">
-            <p>
-                ncm input directory:
-                <input type="text" bind:value={ncmDir} />
-            </p>
-            <p>
-                mp3 output directory:
-                <input type="text" bind:value={mp3OutDir} />
-            </p>
-            <p>
-                songcover output directory:
-                <input type="text" bind:value={songCoverOutDir} />
-            </p>
-            <p>
-                <button on:click={customNcm2mp3}>Convert All</button>
-                <button style="width: fit-content;"
-                        on:click={ filterMp3 }>Filter non-mp3 files</button>
-            </p>
-        </div>
-        <h3>{msgEn}</h3>
-        <hr />
-        <h1>Calculate BPM</h1>
-        <h2>
-            Choose existing mp3 file (xxx.mp3) in your custom mp3 folder to
-            calculate BPM
-        </h2>
-        <div class="center">
-            {#if files.length > 0}
-                <select class="select-bpm" bind:value={mp3FileName}>
-                    {#each files as item}
-                        <option value={item}>{item}</option>
-                    {/each}
-                </select>
-            {:else}
-                <select class="select-bpm">
-                    <option>No mp3 file in your mp3 folder.</option>
-                </select>
-            {/if}
-            <button id="eng-bpm" on:click={calcBPM}>Calculate BPM</button>
-            <button on:click={loadMp3Files}>Refresh</button>
-            <h3>BPM: {bpm}</h3>
-        </div>
-    {/if}
+        <p>
+            {$_("songcoverOutput")}:
+            <input type="text" bind:value={songCoverOutDir} />
+        </p>
+        <p>
+            <button on:click={customNcm2mp3}>{$_("convertAll")}</button>
+            <button style="width: fit-content;" on:click={filterMp3}
+                >{$_("filterNonMp3")}
+            </button>
+        </p>
+    </div>
+    <h3>{ get(locale) === "zh" ? msgZh : msgEn}</h3>
+    <hr />
+    <h1>{$_("calcBPM")}</h1>
+    <h2>{$_("bpmDescription")}</h2>
+    <div class="center">
+        {#if files.length > 0}
+            <select class="select-bpm" bind:value={mp3FileName}>
+                {#each files as item}
+                    <option value={item}>{item}</option>
+                {/each}
+            </select>
+        {:else}
+            <select class="select-bpm">
+                <option value="">{$_("bpmNoFile")}</option>
+            </select>
+        {/if}
+        <button on:click={calcBPM}>{$_("calcBPM")}</button>
+        <button on:click={loadMp3Files}>{$_("bpmRefresh")}</button>
+        <h3>BPM: {bpm}</h3>
+    </div>
 </div>
 
 <style lang="stylus">
@@ -282,7 +238,7 @@
     
 
     button
-        width 100px
+        width 120px
         height 35px
         margin 0 auto
         background-color black

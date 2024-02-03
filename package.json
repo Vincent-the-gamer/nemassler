@@ -1,7 +1,7 @@
 {
   "name": "nemassler",
   "author": "Vincent-the-gamer",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Transform .ncm audio format into .mp3 format, and get beats per minute(BPM) of MP3s",
   "main": "main.ts",
   "config": {

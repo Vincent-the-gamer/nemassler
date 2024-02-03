@@ -1,13 +1,10 @@
 <script lang="ts">
     import Icon from "@/assets/icon.png";
     import useElectronHref from "@/hooks/useElectronHref";
-    import { language } from "@/store/languageStore";
+    import { get } from "svelte/store";
+    import { _, locale } from "svelte-i18n"
 
     const electronHref = useElectronHref("https://github.com/Vincent-the-gamer/Nemassler")
-
-    function changeLocalStorageLanguage() {
-        localStorage.setItem("language", $language);
-    }
 </script>
 
 <header>
@@ -17,16 +14,10 @@
     </span>
 
     <span class="right">
-        <div class="text">
-            {#if $language === "zh"}
-                <span id="zh">语言:</span>
-            {:else}
-                <span id="en">Language:</span>
-            {/if}
-        </div>
-        <select bind:value={$language} on:change={changeLocalStorageLanguage}>
-            <option value="zh">简体中文</option>
+        <span class="text">Language:</span>
+        <select bind:value={$locale}>
             <option value="en">English</option>
+            <option value="zh">简体中文</option>
         </select>
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -88,23 +79,13 @@ header
           right: 100px
         
 
-    .text
-        & #zh
-            position absolute
-            top 11px
-            height 35px
-            right 150px
-            width 100px
-            border-radius 5px
-        
-        & #en
+        .text
             position absolute
             top 10px
             height 35px
             right 200px
             width 100px
             border-radius 5px
-        
         
     select
         position absolute

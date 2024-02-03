@@ -1,7 +1,7 @@
 {
   "name": "frontend",
   "private": true,
-  "version": "1.0.4",
+  "version": "1.0.5",
   "type": "module",
   "scripts": {
     "serve": "vite",
@@ -23,6 +23,7 @@
   "dependencies": {
     "@vincent-the-gamer/utils": "^0.1.5",
     "axios": "^1.5.0",
+    "svelte-i18n": "^4.0.0",
     "svelte-spa-router": "^3.3.0"
   }
 }

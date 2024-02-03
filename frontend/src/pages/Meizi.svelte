@@ -1,112 +1,84 @@
-<Header/>
-    {#if $language === "zh"}
-        <div class="container">
-            <p class="other-func">
-                其它功能： <a class="route" href="/" use:link>音频处理</a>
-            </p>
-            <h1>妹子图片</h1>
-            <p>
-                绅士(Hentai)模式: <input type="checkbox" bind:checked={ isHentai }/>
-            </p>
-            <p>
-                你要几张图片? <input type="number" bind:value={ number }
-                                   min="1" max="10" 
-                                   on:blur={ handleNumberBlur }
-                                   on:focus={ () => getButtonAvailable = false }
-                                   />
-            </p>
-            <p>
-                <button on:click={ getPictures }
-                        disabled={ !getButtonAvailable }>获取图片！</button>
-                <button on:click={ () => picList = [] }>清空图片列表</button>
-            </p>
-            <div class="pic-area">
-                <h3>图片展示区</h3>
-                <div class="pictures">
-                    {#each picList as picture}
-                        <!-- svelte-ignore a11y-click-events-have-key-events -->
-                        <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-                        <img src={picture.url} alt={picture.title}
-                             title={picture.title} on:click={ useElectronHref(picture.url) }
-                        />
-                    {/each}
-                </div>
-            </div>
-        </div>
-    {/if}
-    {#if $language === "en"}
-        <div class="container">
-            <p class="other-func">
-                Other content： <a class="route" href="/" use:link>Audio Handler</a>
-            </p>
-            <h1>Anime Girls</h1>
-            <p>
-                Hentai Mode: <input type="checkbox" bind:checked={ isHentai }/>
-            </p>
-            <p>
-                Number of picture: <input type="number" bind:value={ number }
-                                   min="1" max="10" 
-                                   on:blur={ handleNumberBlur }
-                                   on:focus={ () => getButtonAvailable = false }
-                                   />
-            </p>
-            <p>
-                <button on:click={ getPictures }
-                        disabled={ !getButtonAvailable }>GIMME DA PICCHA(s)!</button>
-                <button on:click={ () => picList = [] }>Clear Pic List</button>
-            </p>
-            <div class="pic-area">
-                <h3>Pic Show Area</h3>
-                <div class="pictures">
-                    {#each picList as picture}
-                        <!-- svelte-ignore a11y-click-events-have-key-events -->
-                        <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-                        <img src={picture.url} alt={picture.title}
-                             title={picture.title} on:click={ useElectronHref(picture.url) }
-                        />
-                    {/each}
-                </div>
-            </div>
-        </div>
-    {/if}
-<Footer/>
-
 <script lang="ts">
-  import Header from "@/lib/Header.svelte"
-  import Footer from "@/lib/Footer.svelte"
-  import { link } from "svelte-spa-router";
-  import { language } from "@/store/languageStore";
-  import axios from "@/utils/axios";
-  import useElectronHref from "@/hooks/useElectronHref";
+    import Header from "@/lib/Header.svelte";
+    import Footer from "@/lib/Footer.svelte";
+    import { link } from "svelte-spa-router";
+    import axios from "@/utils/axios";
+    import useElectronHref from "@/hooks/useElectronHref";
+    import { _ } from "svelte-i18n"
 
-  // enable hentai mode?
-  let isHentai: boolean = false
-  // number of pictures
-  let number: number = 1
-  // picture list
-  let picList: any = []
-  // get button availability
-  let getButtonAvailable: boolean = true
+    // enable hentai mode?
+    let isHentai: boolean = false;
+    // number of pictures
+    let number: number = 1;
+    // picture list
+    let picList: any = [];
+    // get button availability
+    let getButtonAvailable: boolean = true;
 
-  // get pictures
-  function getPictures(){
-    axios.post("/meizi", {
-        isR18: isHentai,
-        num: number
-    }).then(({data}) => {
-        picList = [...data.data]
-    })
-  }
+    // get pictures
+    function getPictures() {
+        axios
+            .post("/meizi", {
+                isR18: isHentai,
+                num: number,
+            })
+            .then(({ data }) => {
+                picList = [...data.data];
+            });
+    }
 
-  function handleNumberBlur(){
-    // limit number to 1-10
-    if(number > 10) number = 10
-    if(number < 1) number = 1
-    setTimeout(() => {
-        getButtonAvailable = true
-    }, 1000)
-  }
+    function handleNumberBlur() {
+        // limit number to 1-10
+        if (number > 10) number = 10;
+        if (number < 1) number = 1;
+        setTimeout(() => {
+            getButtonAvailable = true;
+        }, 1000);
+    }
 </script>
+
+<Header />
+<div class="container">
+    <p class="other-func">
+        {$_("other-func")}： <a class="route" href="/" use:link>{$_("audioHandler")}</a>
+    </p>
+    <h1>{$_("audioHandler")}</h1>
+    <p>
+        {$_("hentaiMode")}: <input type="checkbox" bind:checked={isHentai} />
+    </p>
+    <p>
+        {$_("howMany")}? <input
+            type="number"
+            bind:value={number}
+            min="1"
+            max="10"
+            on:blur={handleNumberBlur}
+            on:focus={() => (getButtonAvailable = false)}
+        />
+    </p>
+    <p>
+        <button on:click={getPictures} disabled={!getButtonAvailable}
+            >{$_("getPic")}！</button
+        >
+        <button on:click={() => (picList = [])}>{$_("empty")}</button>
+    </p>
+    <div class="pic-area">
+        <h3>{$_("picShowArea")}</h3>
+        <div class="pictures">
+            {#each picList as picture}
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+                <img
+                    src={picture.url}
+                    alt={picture.title}
+                    title={picture.title}
+                    on:click={useElectronHref(picture.url)}
+                />
+            {/each}
+        </div>
+    </div>
+</div>
+<Footer />
 
 <style lang="stylus">
 .route 

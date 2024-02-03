@@ -1,0 +1,21 @@
+{
+    "other-func": "其他功能",
+    "anime-pics": "妹子图片",
+    "ncm2mp3": "ncm转mp3",
+    "description": "将.ncm后缀文件放入ncm文件夹，然后点击以下按钮即可批量转mp3",
+    "ncmInput": "ncm输入路径",
+    "mp3Output": "mp3输出路径",
+    "songcoverOutput": "歌曲封面输出路径",
+    "convertAll": "批量转mp3",
+    "filterNonMp3": "删除mp3文件夹中非mp3后缀文件",
+    "calcBPM": "计算BPM",
+    "bpmDescription": "选择文件夹里面已有的mp3文件 (xxx.mp3), 计算BPM",
+    "bpmNoFile": "没有待检测bpm的mp3文件",
+    "bpmRefresh": "刷新",
+    "audioHandler": "音频处理",
+    "hentaiMode": "绅士(Hentai)模式",
+    "howMany": "你要几张图片",
+    "getPic": "获取图片",
+    "empty": "清空图片列表",
+    "picShowArea": "图片展示区"
+}
