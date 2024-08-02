@@ -75,7 +75,7 @@ jobs:
 
       # package.json里面配置的编译命令
         run: |
-          if [[ ${{ matrix.platform }} == 'macos-latest' ]]; then
+          if [[ '${{ matrix.platform }}' == 'macos-latest' ]]; then
             # macOS x86_64的未来不再支持, GitHub Actions流水线已默认使用aarch64环境
             # 如有需要手动打包, universal通用app打包有问题 
             pnpm tauri build --target aarch64-apple-darwin

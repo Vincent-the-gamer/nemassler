@@ -10,7 +10,7 @@
 </p>
 
 > [!NOTE]
-> This is v2.x version of nemassler, find v1 [here.](https://github.com/Vincent-the-gamer/nemassler/tree/v1).
+> This is v2.x version of nemassler, find v1 [here](https://github.com/Vincent-the-gamer/nemassler/tree/v1).
 
 # Dev
 ## Bump versions of `Cargo.toml`
