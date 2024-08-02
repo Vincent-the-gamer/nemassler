@@ -59,10 +59,8 @@ CI will trigger on `release` branch push.
 pnpm tauri build
 ```
 
-# Early Preview
+# Preview
 
-## English
-![early-en](./.github/img/early-en.png)
-
-## Simplified Chinese(partially now.)
-![early-cn](./.github/img/early-cn.png)
+![preview1](.github/img/preview1.png)
+![preview2](.github/img/preview2.png)
+![preview3](.github/img/preview3.png)
