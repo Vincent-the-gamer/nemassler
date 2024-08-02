@@ -1,0 +1,27 @@
+[package]
+name = "nemassler"
+version = "2.0.0"
+description = "Transform Netease Music .ncm audio into .mp3 audio, and support .mp3 BPM calculation, built in Rust."
+authors = ["Vincent-the-gamer <https://github.com/Vincent-the-gamer>"]
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "1.5", features = [] }
+
+[dependencies]
+tauri = { version = "1.7", features = [ "window-close", "window-unminimize", "window-maximize", "window-hide", "window-minimize", "window-unmaximize", "window-start-dragging", "window-show", "shell-open"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0.121"
+whoami = "1.5.1"
+base64 = "0.21.7"
+byteorder = "1.5.0"
+id3 = "1.14.0"
+json = "0.12.4"
+metaflac = "0.2.7"
+rust-crypto = "0.2.36"
+tempfile = "3.10.1"
+
+[features]
+# this feature is used for production builds or when `devPath` points to the filesystem
+# DO NOT REMOVE!!
+custom-protocol = ["tauri/custom-protocol"]

@@ -1,82 +1,68 @@
 <p align="center">
-  <img src="./.github/TitleLogo.png" width="200" height="200"/>
+  <img src="./.github/img/nmsl-rust.png" 
+       style="height: 110px;"/>
 </p>
+
 <h1 align="center">Nemassler</h1>
-<p align="center">
-  A useful multiple function tool! <br/>
-  Mainly transform .ncm to .mp3 and calculate audio BPM.
-</p>
 
 <p align="center">
-  <span style="font-size: 20px;">Powered By</span>
-  <br/>
-  <a href="https://www.svelte.cn/" target="_blank">
-    <img src="./.github/svelte.png"/>
-  </a>
-  <br/>
+  Transform netease <b>.ncm</b> audios into <b>mp3</b> and calculate audio BPM, built in Rust.
 </p>
 
-<p align="center">
-  <span>English</span>
-  <span style="margin: 3px;">|</span>
-  <a href="./README_ZH.md" target="_blank">中文文档</a>
-</p>
+> [!NOTE]
+> This is v2.x version of nemassler, find v1 [here.](https://github.com/Vincent-the-gamer/nemassler/tree/v1).
 
-# Installation
-Download application from Release: 
+# Dev
+## Bump versions of `Cargo.toml`
 
-**Latest Version: v1.0.5**
+1. Install `cargo-edit` globally
 
-[https://github.com/Vincent-the-gamer/Nemassler/releases](https://github.com/Vincent-the-gamer/Nemassler/releases)
+```shell
+cargo install cargo-edit --features vendored-openssl
+```
 
-Can't open in macOS?
-* Open Terminal
-* Input `xattr -d com.apple.quarantine `
-* Drag the application and drop in Terminal, the directory will be automatically written.
-* Press enter(aka return) button!!!
-* Re-open the application.
+2. Run `cargo upgrade`.
 
-# Page Overview
+```shell
+cargo upgrade
+```
 
-![page](./.github/page.png)
+P.S. Check your global cargo packs with `cargo install --list`
 
-You can choose either `English` or `Simplified Chinese` now.
 
-# Get Started
+# Build
 
-## ncm -> mp3
-put your `.ncm` files in `your ncm input folder`, then click the `Convert All` button
+## GitHub Actions
+Edit `.github/workflows/release.yml`,
 
-mp3 files and song cover will be generated in `your mp3 output folder`.
+```yaml
+steps:
+  - uses: actions/checkout@v2
 
-## Default Folders
-* Windows: 
-    * ncm: C:\\Users\\Public\\ncm
-    * mp3: C:\\Users\\Public\\mp3
-    * songcover: C:\\Users\\public\\songcover
-* macOS
-    * ncm: /Users/Shared/ncm
-    * mp3: /Users/Shared/mp3
-    * songcover: /Users/Shared/songcover
-* Linux
-    * ncm: /home/{user_name}/Public/ncm
-    * mp3: /home/{user_name}/Public/mp3
-    * songcover: /home/{user_name}/Public/songcover
+  # 创建 release
+  - name: Create Release
+    id: create_release
+    uses: actions/create-release@v1
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    with:
+      tag_name: 'v2.0.0' # Change here to your release version.
+      release_name: 'Nemassler v2.0.0' # Release title.
+      body: 'Released by GitHub Actions.' # Release content.
+```
 
-## Calculate BPM（beats per minute）
-choose your generated `.mp3` audios, or import your own `.mp3` audios into `your mp3 output folder` to calculate BPM.
+CI will trigger on `release` branch push.
 
-**And, a funny feature inside, but I can't tell more😁**
 
-# Build from source code
-~~~shell
-git clone https://github.com/Vincent-the-gamer/Nemassler.git
+## Manual Build
+```shell
+pnpm tauri build
+```
 
-npm run build-app
-~~~
+# Early Preview
 
-# Changelog
-View [Changelog](./CHANGELOG.md)
+## English
+![early-en](./.github/img/early-en.png)
 
-# License
-[MIT](./LICENSE)
+## Simplified Chinese(partially now.)
+![early-cn](./.github/img/early-cn.png)

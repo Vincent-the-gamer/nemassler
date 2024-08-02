@@ -1,92 +1,90 @@
-# release.yml
-name: Build Electron App For Win/Mac
-
+# 可选，将显示在 GitHub 存储库的“操作”选项卡中的工作流名称
+name: Release CI
+ 
+# 指定此工作流的触发器
 on:
   push:
-    tags:
-      - 'v*.*.*'
-
+    branches:
+    - release
+ 
+# 需要运行的作业组合
 jobs:
-  build-electron:
-    name: build and release electron app
-    runs-on: ${{ matrix.os }}
-    
-    # create a build matrix for jobs
+  # 任务：创建 release 版本
+  create-release:
+    runs-on: ubuntu-latest
+    outputs:
+      RELEASE_UPLOAD_ID: ${{ steps.create_release.outputs.id }}
+ 
+    steps:
+      - uses: actions/checkout@v2
+ 
+      # 创建 release
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: 'v2.0.0'
+          release_name: 'Nemassler v2.0.0'
+          body: 'Released by GitHub Actions.'
+  
+  # 编译 Tauri
+  build-tauri:
+    needs: create-release
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, macos-latest]
-
+        platform: [macos-latest, ubuntu-latest, windows-latest]
+ 
+    runs-on: ${{ matrix.platform }}
     steps:
-      # step1: check out repository
-      - name: Check out git repository
-        uses: actions/checkout@v2
-
-      # step2: install node env
-      - name: Install Node.js
+      - uses: actions/checkout@v2
+ 
+      # 安装 Node.js
+      - name: Setup node
         uses: actions/setup-node@v2
         with:
-          node-version: 16
-
-      # step3: npm install
-      - name: Install npm dependencies
+          node-version: 19
+ 
+      # 安装 Rust
+      - name: Install Rust stable
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+ 
+      # 使用 Rust 缓存，加快安装速度
+      - uses: Swatinem/rust-cache@v1
+ 
+      - name: install dependencies (ubuntu only)
+        if: matrix.platform == 'ubuntu-latest'
         run: |
-          npm install
-          cd frontend
-          npm install
-          cd ../
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
 
-      # step4: build app for mac/win
+      # 安装pnpm
+      - name: Install pnpm
+        run: npm install -g pnpm  # 安装全局的pnpm
+
+      # 使用pnpm安装项目依赖
+      - name: Install pnpm dependencies
+        run: pnpm install  
+ 
       # 安装依赖执行构建，以及推送 github release
-      - name: Build app
+      - name: Install app dependencies and build it
 
       # package.json里面配置的编译命令
         run: |
-          npm run build-app
-      
-      # step5: cleanup artifacts
-      - name: cleanup artifacts for Windows
-        if: matrix.os == 'windows-latest'
-        run: |
-          npx rimraf "out/make/zip/win32/x64/!(*.zip)"
-
-      - name: cleanup artifacts for macOS
-        if: matrix.os == 'macos-latest'
-        run: |
-          npx rimraf "out/make/!(*.dmg)"
-
-      # step6: upload artifacts
-      - name: upload artifacts for macOS
-        if: matrix.os == 'macos-latest'
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ matrix.os }}
-          path: out/make
-        
-      - name: upload artifacts for Windows
-        if: matrix.os == 'windows-latest'
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ matrix.os }}
-          path: out/make/zip/win32/x64
-
-      # step7: create release
-      - name: release for macOS
-        uses: softprops/action-gh-release@v1
-        if: | 
-          startsWith(github.ref, 'refs/tags/') &&
-          matrix.os == 'macos-latest'
-        with:
-          files: "out/make/**"
+          if [[ ${{ matrix.platform }} == 'macos-latest' ]]; then
+            # macOS x86_64的未来不再支持, GitHub Actions流水线已默认使用aarch64环境
+            # 如有需要手动打包, universal通用app打包有问题 
+            pnpm tauri build --target aarch64-apple-darwin
+          else
+            # 在其他平台上执行构建命令
+            pnpm tauri build
+          fi
+      - uses: tauri-apps/tauri-action@v0.3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: release for Window
-        uses: softprops/action-gh-release@v1
-        if: | 
-          startsWith(github.ref, 'refs/tags/') &&
-          matrix.os == 'windows-latest'
-        with: 
-          files: "out/make/zip/win32/x64/**"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          releaseId: ${{ needs.create-release.outputs.RELEASE_UPLOAD_ID }}

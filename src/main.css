@@ -1,0 +1,11 @@
+@font-face {
+    font-family: DM Mono;
+    src: url("./assets/fonts/dm-mono.ttf");
+}
+
+html {
+    background-color: black;
+    color: white;
+    overflow: hidden;
+    font-family: DM Mono;
+}

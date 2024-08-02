@@ -1,39 +1,38 @@
 {
   "name": "nemassler",
-  "author": "Vincent-the-gamer",
-  "version": "1.0.5",
-  "description": "Transform .ncm audio format into .mp3 format, and get beats per minute(BPM) of MP3s",
-  "main": "main.ts",
-  "config": {
-    "forge": "./forge.config.ts"
-  },
+  "version": "2.0.0",
+  "author": "Vincent-the-gamer <https://github.com/Vincent-the-gamer>",
+  "type": "module",
   "scripts": {
-    "page": "esno app.ts",
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "frontend": "cd frontend && npm run serve",
-    "frontend-build": "cd frontend && npm run build",
-    "build-app": "npm run frontend-build && npm run make"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "tauri": "tauri",
+    "dep": "taze major",
+    "clean": "cd src-tauri && cargo clean"
   },
-  "license": "ISC",
   "dependencies": {
-    "@vincent-the-gamer/utils": "^0.1.5",
-    "aes-js": "^3.1.2",
-    "axios": "^1.6.5",
-    "electron-squirrel-startup": "^1.0.0",
-    "express": "^4.18.2"
+    "@tauri-apps/api": "^1.6.0",
+    "@vincent-the-gamer/utils": "^0.1.9",
+    "@vueuse/core": "^10.11.0",
+    "vue": "^3.4.34",
+    "vue-i18n": "^9.13.1",
+    "vue-router": "^4.4.0"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.4.2",
-    "@electron-forge/maker-deb": "^6.4.2",
-    "@electron-forge/maker-dmg": "^6.4.2",
-    "@electron-forge/maker-rpm": "^6.4.2",
-    "@electron-forge/maker-squirrel": "^6.4.2",
-    "@electron-forge/maker-zip": "^6.4.2",
-    "electron": "^26.6.5",
-    "esno": "^4.0.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "@iconify-json/heroicons": "^1.1.23",
+    "@iconify-json/logos": "^1.1.43",
+    "@iconify-json/material-symbols-light": "^1.1.25",
+    "@tauri-apps/cli": "^1.6.0",
+    "@types/node": "^20.14.13",
+    "@vitejs/plugin-vue": "^5.1.1",
+    "taze": "^0.16.3",
+    "typescript": "^5.5.4",
+    "unocss": "^0.61.8",
+    "unplugin-auto-import": "^0.18.2",
+    "unplugin-vue-components": "^0.27.3",
+    "unplugin-vue-router": "^0.10.2",
+    "vite": "^5.3.5",
+    "vue-tsc": "^2.0.29"
   }
 }
