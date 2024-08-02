@@ -32,7 +32,7 @@ P.S. Check your global cargo packs with `cargo install --list`
 
 # Build
 
-## GitHub Actions
+## Build via GitHub Actions
 Edit `.github/workflows/release.yml`,
 
 ```yaml
@@ -54,7 +54,7 @@ steps:
 CI will trigger on `release` branch push.
 
 
-## Manual Build
+## Manually build
 ```shell
 pnpm tauri build
 ```
