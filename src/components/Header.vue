@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { appWindow } from '@tauri-apps/api/window'
+import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow'
 import Minimize from "~/assets/images/minimize.svg"
 import Maximize from "~/assets/images/maximize.svg"
 import Close from "~/assets/images/close.svg"
+
+const appWindow = getCurrentWebviewWindow()
 
 onMounted(() => {
     document

@@ -13,6 +13,13 @@
 > This is v2.x version of nemassler, find v1 [here](https://github.com/Vincent-the-gamer/nemassler/tree/v1).
 
 # Dev
+
+## Run dev app
+
+```shell
+pnpm run tauri dev
+```
+
 ## Bump versions of `Cargo.toml`
 
 1. Install `cargo-edit` globally
@@ -29,6 +36,12 @@ cargo upgrade
 
 P.S. Check your global cargo packs with `cargo install --list`
 
+
+## Update tauri toolchain
+
+```shell
+pnpm run tauri migrate
+```
 
 # Build
 
@@ -56,7 +69,7 @@ CI will trigger on `release` branch push.
 
 ## Manually build
 ```shell
-pnpm tauri build
+pnpm run tauri build
 ```
 
 # Preview

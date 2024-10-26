@@ -1,6 +1,6 @@
 use crate::{
-    ncm2mp3::process_file, 
-    traits::{Converter, Ensure, Filter}
+    ncm2mp3::process_file,
+    traits::{Converter, Ensure, Filter},
 };
 use std::{fs, path::Path};
 
@@ -86,7 +86,7 @@ impl<'a> Converter for AudioFile<'a> {
         } else {
             eprintln!("Error converting ncm.");
         }
-        
+
         results
     }
 }

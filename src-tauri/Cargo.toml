@@ -6,22 +6,28 @@ authors = ["Vincent-the-gamer <https://github.com/Vincent-the-gamer>"]
 edition = "2021"
 
 [build-dependencies]
-tauri-build = { version = "1.5", features = [] }
+tauri-build = { version = "2", features = [] }
 
 [dependencies]
-tauri = { version = "1.7", features = [ "window-close", "window-unminimize", "window-maximize", "window-hide", "window-minimize", "window-unmaximize", "window-start-dragging", "window-show", "shell-open"] }
+tauri = { version = "2", features = [] }
 serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0.121"
-whoami = "1.5.1"
+serde_json = "1.0.132"
+whoami = "1.5.2"
 base64 = "0.21.7"
-byteorder = "1.5.0"
-id3 = "1.14.0"
-json = "0.12.4"
-metaflac = "0.2.7"
-rust-crypto = "0.2.36"
-tempfile = "3.10.1"
+aes = "0.8.4"
+cipher = { version = "^0.4", features = ["alloc", "block-padding"] }
+thiserror = "1.0.65"
+rayon = "1.10.0"
+anyhow = "1.0.43"
+tauri-plugin-shell = "2"
+
+[dependencies.lofty]
+version = "0.21.0"
+optional = true
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem
 # DO NOT REMOVE!!
 custom-protocol = ["tauri/custom-protocol"]
+default = ["lofty"]
+lofty = ["dep:lofty"]

@@ -1,4 +1,4 @@
-import { open } from '@tauri-apps/api/shell';
+import { open } from '@tauri-apps/plugin-shell';
 
 /**
  * In Tauri app, open link with user's default browser.
