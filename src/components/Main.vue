@@ -27,7 +27,7 @@ function activeStyle(route: string) {
                          :class="activeStyle('/bpmDetect')"
                     />
                 </div>
-                <div absolute bottom-4 @click="() => toRoute('/options')">
+                <div absolute bottom-8 @click="() => toRoute('/options')">
                     <div i-material-symbols-light-settings-outline 
                        icon 
                          :title="$t('options')"

@@ -67,6 +67,14 @@ impl<'a> Filter for AudioFile<'a> {
             eprintln!("Error reading directory {}", dir);
         }
     }
+
+    fn wipe_out_ds_store(dir: &str) -> () {
+        let path = format!("{}/{}", dir, ".DS_Store");
+        let file_exists = fs::exists(&path).expect("File doesn't exists!");
+        if file_exists {
+            fs::remove_file(path).expect("Can't remove file as file doesn't exists");
+        }
+    }
 }
 
 impl<'a> Converter for AudioFile<'a> {
@@ -74,12 +82,16 @@ impl<'a> Converter for AudioFile<'a> {
         let mut results: Vec<String> = vec![];
         Self::ensure_directory_exists(ncm_dir);
         Self::ensure_directory_exists(out_dir);
+        Self::wipe_out_ds_store(ncm_dir);
         Self::filter_by_suffix(ncm_dir, "ncm");
         if let Ok(entries) = fs::read_dir(ncm_dir) {
             for entry in entries {
                 if let Ok(entry) = entry {
-                    let path_buf = entry.path();
-                    let result = process_file(path_buf.to_str().unwrap(), out_dir).unwrap();
+                    let result = process_file(
+                        ncm_dir, 
+                        out_dir, 
+                        entry.file_name().to_str().unwrap()
+                    ).unwrap();
                     results.push(result);
                 }
             }
