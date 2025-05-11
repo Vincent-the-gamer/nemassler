@@ -11,6 +11,8 @@
 
 > [!NOTE]
 > This is v2.x version of nemassler, find v1 [here](https://github.com/Vincent-the-gamer/nemassler/tree/v1).
+>
+> If you want a Node.js library rather than an app, see [Nemassler-lib](https://github.com/Vincent-the-gamer/nemassler-lib)
 
 # Dev
 
